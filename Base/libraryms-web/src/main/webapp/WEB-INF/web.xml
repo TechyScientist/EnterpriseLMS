@@ -1,3 +1,10 @@
 <web-app>
-
+    <error-page>
+        <error-code>404</error-code>
+        <location>/error/404.jsp</location>
+    </error-page>
+    <servlet>
+        <servlet-name>com.johnnyconsole.libraryms.servlet.SignInServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.SignInServlet</servlet-class>
+    </servlet>
 </web-app>
