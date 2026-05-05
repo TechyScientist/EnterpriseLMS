@@ -27,7 +27,14 @@ public class SignInServlet extends HttpServlet {
                     password = request.getParameter("password");
 
             if (!(username.isEmpty() && password.isEmpty())) {
-                User user = userDao.getUserByUsername(username);
+                User user;
+                if(username.startsWith("1")) {
+                    user = userDao.getUserByBarcode(username);
+                }
+                else {
+                    user = userDao.getUserByUsername(username);
+                }
+
                 if (user != null) {
                     if (BCrypt.verifyer(BCrypt.Version.VERSION_2A)
                             .verifyStrict(password.toCharArray(), user.getPassword().toCharArray())

@@ -43,7 +43,7 @@ if(status != SC_OK) { %>
 <h3>Sign In</h3>
 <form action="SignInServlet" method="post">
     <div class="form-field">
-        <label for="username">Username</label>
+        <label for="username">Barcode/Username</label>
         <input type="text" name="username" id="username" required/>
     </div>
     <div class="form-field">
