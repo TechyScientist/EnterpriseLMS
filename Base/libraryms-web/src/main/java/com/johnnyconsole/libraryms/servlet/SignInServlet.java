@@ -22,33 +22,34 @@ public class SignInServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        if(request.getParameter("signin-submit") != null) {
+        if (request.getParameter("signin-submit") != null) {
             String username = request.getParameter("username"),
                     password = request.getParameter("password");
 
             if (!(username.isEmpty() && password.isEmpty())) {
                 User user = userDao.getUserByUsername(username);
                 if (user != null) {
-                    if (BCrypt.verifyer(BCrypt.Version.VERSION_2A).verifyStrict(password.toCharArray(), user.getPassword().toCharArray())
+                    if (BCrypt.verifyer(BCrypt.Version.VERSION_2A)
+                            .verifyStrict(password.toCharArray(), user.getPassword().toCharArray())
                             .verified) {
                         session.setAttribute("user", user);
                         session.setAttribute("play-sound", "");
                         response.sendRedirect("/libraryms/dashboard.jsp");
                     }
-                } else {
-                    session.setAttribute("status", SC_NOT_FOUND);
+                    else {
+                        session.setAttribute("status", SC_NOT_FOUND);
+                        response.sendRedirect("/libraryms/signin.jsp");
+                    }
+                }
+                else {
+                    session.setAttribute("status", SC_NOT_ACCEPTABLE);
                     response.sendRedirect("/libraryms/signin.jsp");
                 }
             }
             else {
-                session.setAttribute("status", SC_NOT_ACCEPTABLE);
+                session.setAttribute("status", SC_BAD_REQUEST);
                 response.sendRedirect("/libraryms/signin.jsp");
             }
         }
-        else {
-            session.setAttribute("status", SC_BAD_REQUEST);
-            response.sendRedirect("/libraryms/signin.jsp");
-        }
     }
-
 }
