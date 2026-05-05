@@ -21,6 +21,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>libraryms-ejb</artifactId>
+            <type>ejb</type>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>libraryms-web</artifactId>
+            <type>war</type>
+        </dependency>
+    </dependencies>
+
     <build>
         <finalName>Library Management System</finalName>
         <plugins>
@@ -31,13 +44,13 @@
                 <configuration>
                     <version>7</version>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
-                    <!-- <modules>
+                    <modules>
                         <webModule>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>libraryms-web</artifactId>
                             <contextRoot>/libraryms</contextRoot>
                         </webModule>
-                    </modules> -->
+                    </modules>
                     <outputFileNameMapping>@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
                 </configuration>
             </plugin>
