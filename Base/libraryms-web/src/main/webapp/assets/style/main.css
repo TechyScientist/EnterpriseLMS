@@ -44,6 +44,7 @@ label {
 }
 
 input:not([type="submit"]), select {
+    min-width: 300px;
     padding: 10px;
     background: var(--color-background);
     border-radius: 10px;
