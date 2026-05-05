@@ -103,28 +103,34 @@ nav a#current, nav a:hover {
 }
 
 p#success {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     background-color: darkgreen;
     color: white;
     border-radius: 16px;
-    text-align: center;
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 10px;
 }
 
 p#warning {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     background-color: #E6B848;
     color: black;
     border-radius: 16px;
-    text-align: center;
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 10px;
 }
 
 p#error {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     background-color: darkred;
     color: white;
     border-radius: 16px;
-    text-align: center;
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 10px;
 }
