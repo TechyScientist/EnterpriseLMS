@@ -4,7 +4,11 @@
         <location>/error/404.jsp</location>
     </error-page>
     <servlet>
-        <servlet-name>com.johnnyconsole.libraryms.servlet.SignInServlet</servlet-name>
+        <servlet-name>SignInServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.SignInServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SignOutServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.SignOutServlet</servlet-class>
     </servlet>
 </web-app>
