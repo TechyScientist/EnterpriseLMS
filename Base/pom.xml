@@ -10,6 +10,7 @@
     <description>Component wrapper for Enterprise Library Management System</description>
     <modules>
         <module>libraryms-ear</module>
+        <module>libraryms-ejb</module>
     </modules>
     <version>1.0</version>
     <packaging>pom</packaging>
