@@ -23,7 +23,7 @@
 
 <% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
 if(status != SC_OK) { %>
-    <p id="error"><strong>Error</strong>:
+    <p id="error"><img src="assets/img/cross.png" style="width: 50px; aspect-ratio: 1/1; margin-right: 10px;" alt="Error"/><strong>Error</strong>:
         <% switch(status) {
                 case SC_BAD_REQUEST: %>
                     That action must be done by the sign in form.
@@ -31,12 +31,12 @@ if(status != SC_OK) { %>
                 case SC_NOT_ACCEPTABLE: %>
                     Missing or empty parameter.
         <%          break;
-                case SC_NOT_FOUND:
-                case SC_UNAUTHORIZED: %>
+                case SC_NOT_FOUND: %>
                     Invalid credentials, please try again.
         <%          break;
            } %>
     </p>
+    <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
 <% } %>
 <h3>Sign In</h3>
 <form action="SignInServlet" method="post">
