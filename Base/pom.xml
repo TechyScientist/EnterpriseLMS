@@ -11,6 +11,7 @@
     <modules>
         <module>libraryms-ear</module>
         <module>libraryms-ejb</module>
+        <module>libraryms-web</module>
     </modules>
     <version>1.0</version>
     <packaging>pom</packaging>
@@ -29,6 +30,19 @@
                 <version>18.0.1.Final</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>libraryms-ejb</artifactId>
+                <version>${project.version}</version>
+                <type>ejb</type>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>libraryms-web</artifactId>
+                <version>${project.version}</version>
+                <type>war</type>
+                <scope>compile</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
