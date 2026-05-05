@@ -34,7 +34,9 @@ if(status != SC_OK) { %>
                 case SC_NOT_FOUND: %>
                     Invalid credentials, please try again.
         <%          break;
-           } %>
+                case SC_UNAUTHORIZED: %>
+                    You must be signed in to do that.
+        <%   } %>
     </p>
     <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
 <% } %>
