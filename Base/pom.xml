@@ -4,14 +4,70 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.johnnyconsole.chessclub</groupId>
-    <artifactId>Base</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.johnnyconsole.libraryms</groupId>
+    <artifactId>base</artifactId>
+    <name>Library Management System - Base</name>
+    <description>Component wrapper for Enterprise Library Management System</description>
+    <version>1.0</version>
+    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-jakartaee8-with-tools</artifactId>
+                <version>18.0.1.Final</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.spec.javax.annotation</groupId>
+            <artifactId>jboss-annotations-api_1.3_spec</artifactId>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>${project.artifactId}</finalName>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-maven-plugin</artifactId>
+                    <version>2.0.1.Final</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                    <protocol>remote+https</protocol>
+                    <hostname>${env.REMOTE_SERVER_HOSTNAME}</hostname>
+                    <port>${env.REMOTE_SERVER_PORT}</port>
+                    <username>${env.REMOTE_SERVER_USERNAME}</username>
+                    <password>${env.REMOTE_SERVER_PASSWORD}</password>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
