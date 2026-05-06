@@ -2,9 +2,20 @@
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
 <% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
-    if(status == SC_NOT_FOUND) { %>
-        <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>: No copies found. Please double-check your search criteria and try again.</p>
-        <audio src="assets/sound/bonk.mp3" style="display:none;" autoplay></audio>
+   String criteria = session.getAttribute("criteria") == null ? "copyBarcode" : (String) session.getAttribute("criteria");
+    if(status != SC_OK && status != SC_ACCEPTED) { %>
+        <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
+            <% switch(status) {
+                case SC_NOT_FOUND: %>
+                    No copies found. Please double-check your search criteria and try again.
+            <%      break;
+                case SC_NOT_ACCEPTABLE: %>
+                    Invalid copy or title barcode. Please try again.
+            <%      break;
+            } %>
+
+            </p>
+            <audio src="assets/sound/bonk.mp3" style="display:none;" autoplay></audio>
     <% } else if(status == SC_ACCEPTED) { %>
         <audio src="assets/sound/ding.mp3" style="display:none;" autoplay></audio>
     <% } %>
@@ -13,23 +24,23 @@
             <div class="form-field">
                 <label for="searchBy">Search By</label>
                 <select name="searchBy" id="searchBy">
-                    <option value="copyBarcode">Copy Barcode (Exact Match)</option>
-                    <option value="titleBarcode">Title Barcode (Exact Match)</option>
-                    <option value="title">Title (Contains)</option>
-                    <option value="author">Author Name (Contains)</option>
+                    <option value="copyBarcode" <% if(criteria.equals("copyBarcode")) { %> selected <% } %>>Copy Barcode (Exact Match)</option>
+                    <option value="titleBarcode" <% if(criteria.equals("titleBarcode")) { %> selected <% } %>>Title Barcode (Exact Match)</option>
+                    <option value="title" <% if(criteria.equals("title")) { %> selected <% } %>>Title (Contains)</option>
+                    <option value="author" <% if(criteria.equals("author")) { %> selected <% } %>>Author Name (Contains)</option>
                 </select>
             </div>
-            <div class="form-field" id="copyBarcodeSearch">
+            <div class="form-field" id="copyBarcodeSearch" <% if(!criteria.equals("copyBarcode")) { %> style="display: none;" <% } %>>
                 <label for="copyBarcode">Copy Barcode</label>
-                <input type="text" name="copyBarcode" id="copyBarcode" required/>
+                <input type="text" name="copyBarcode" id="copyBarcode" <% if(criteria.equals("copyBarcode")) { %> required <% } %>/>
             </div>
-            <div class="form-field" id="titleBarcodeSearch" style="display: none;">
+            <div class="form-field" id="titleBarcodeSearch" <% if(!criteria.equals("titleBarcode")) { %> style="display: none;" <% } %>>
                 <label for="titleBarcode">Title Barcode</label>
-                <input type="text" name="titleBarcode" id="titleBarcode"/>
+                <input type="text" name="titleBarcode" id="titleBarcode" <% if(criteria.equals("titleBarcode")) { %> required <% } %>/>
             </div>
-            <div class="form-field" id="criteriaSearch" style="display: none;">
+            <div class="form-field" id="criteriaSearch" <% if(criteria.contains("Barcode")) { %> style="display: none;" <% } %>>
                 <label for="criteria">Search Criteria</label>
-                <input type="text" name="criteria" id="criteria"/>
+                <input type="text" name="criteria" id="criteria" <% if(!criteria.contains("Barcode")) { %> required <% } %>/>
             </div>
             <button type="submit" id="search-submit" name="search-submit">Search <img src="assets/img/proceed.png" alt="Search"/></button>
         </form>
@@ -71,5 +82,6 @@
         }
     });
 </script>
-<% session.removeAttribute("status"); %>
+<% session.removeAttribute("status");
+session.removeAttribute("criteria");%>
 <%@ include file="assets/include/footer.jsp" %>
