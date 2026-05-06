@@ -1,17 +1,16 @@
-<%@ page import="com.johnnyconsole.libraryms.persistence.User" %>
 <% String projectRoot = "/libraryms"; %>
 <nav>
     <a href="<%= projectRoot %>" <% if(pageName.equals("home")) { %> id="current" <% } %>>Home</a>
-    <% if(session.getAttribute("user") == null) { %>
+    <% if(user == null) { %>
         <a href="<%= projectRoot %>/signin.jsp" <% if(pageName.equals("signin")) { %> id="current" <% } %>>Sign In</a>
     <% } else { %>
-        <a href="<%= projectRoot %>/catalog-search.jsp"<% if(pageName.equals("catalog-search")) { %> id="current" <% } %>>Catalog Search</a>
-        <a href="<%= projectRoot %>/self-checkout.jsp"<% if(pageName.equals("self-checkout")) { %> id="current" <% } %>>Self-Check Out</a>
-        <a href="<%= projectRoot %>/self-checkin.jsp"<% if(pageName.equals("self-checkin")) { %> id="current" <% } %>>Self-Check In</a>
-        <% if(((User)session.getAttribute("user")).libraryStaff) { %>
-
-        <% } if(((User)session.getAttribute("user")).libraryAdmin) { %>
-
+        <a href="<%= projectRoot %>/catalog-search.jsp" <% if(pageName.equals("catalog-search")) { %> id="current" <% } %>>Catalog Search</a>
+        <a href="<%= projectRoot %>/self-service.jsp" <% if(pageName.equals("self-service")) { %> id="current" <% } %>>Self Service</a>
+        <a href="<%= projectRoot %>/profile.jsp" <% if(pageName.equals("profile")) { %> id="current" <% } %>>My Profile</a>
+        <% if(user.libraryStaff || user.libraryAdmin) { %>
+            <a href="<%= projectRoot %>/staff.jsp" <% if(pageName.equals("staff")) { %> id="current" <% } %>>Staff Operations</a>
+        <% } if(user.libraryAdmin) { %>
+            <a href="<%= projectRoot %>/admin.jsp" <% if(pageName.equals("admin")) { %> id="current" <% } %>>Admin Operations</a>
         <% } %>
         <a href="<%= projectRoot %>/SignOutServlet">Sign Out</a>
     <% } %>
