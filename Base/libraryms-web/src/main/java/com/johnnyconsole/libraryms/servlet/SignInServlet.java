@@ -41,21 +41,21 @@ public class SignInServlet extends HttpServlet {
                             .verified) {
                         session.setAttribute("user", user);
                         session.setAttribute("play-sound", "");
-                        response.sendRedirect("/libraryms/dashboard.jsp");
+                        response.sendRedirect("/library/dashboard.jsp");
                     }
                     else {
                         session.setAttribute("status", SC_NOT_ACCEPTABLE);
-                        response.sendRedirect("/libraryms/signin.jsp");
+                        response.sendRedirect("/library/signin.jsp");
                     }
                 }
                 else {
                     session.setAttribute("status", SC_NOT_FOUND);
-                    response.sendRedirect("/libraryms/signin.jsp");
+                    response.sendRedirect("/library/signin.jsp");
                 }
             }
             else {
                 session.setAttribute("status", SC_BAD_REQUEST);
-                response.sendRedirect("/libraryms/signin.jsp");
+                response.sendRedirect("/library/signin.jsp");
             }
         }
     }

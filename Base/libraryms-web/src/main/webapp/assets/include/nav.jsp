@@ -1,4 +1,4 @@
-<% String projectRoot = "/libraryms"; %>
+<% String projectRoot = "/library"; %>
 <nav>
     <a href="<%= projectRoot %>" <% if(pageName.equals("home")) { %> id="current" <% } %>>Home</a>
     <% if(user == null) { %>

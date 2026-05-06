@@ -5,7 +5,7 @@
 <%
     if(user == null) {
         session.setAttribute("status", SC_UNAUTHORIZED);
-        response.sendRedirect("/libraryms/signin.jsp");
+        response.sendRedirect("/library/signin.jsp");
     }
     else {
         int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");

@@ -20,6 +20,6 @@ public class SignOutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("user");
         session.setAttribute("signed-out", "");
-        response.sendRedirect("/libraryms/");
+        response.sendRedirect("/library/");
     }
 }

@@ -48,7 +48,7 @@
                         <webModule>
                             <groupId>${project.groupId}</groupId>
                             <artifactId>libraryms-web</artifactId>
-                            <contextRoot>/libraryms</contextRoot>
+                            <contextRoot>/library</contextRoot>
                         </webModule>
                     </modules>
                     <outputFileNameMapping>@{artifactId}@@{dashClassifier?}@.@{extension}@</outputFileNameMapping>
