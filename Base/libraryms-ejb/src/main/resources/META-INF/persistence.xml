@@ -12,4 +12,13 @@
             <property name="hibernate.show_sql" value="false"/>
         </properties>
     </persistence-unit>
+    <persistence-unit name="book">
+        <jta-data-source>java:/EnterpriseDS</jta-data-source>
+        <class>com.johnnyconsole.libraryms.persistence.Book</class>
+        <properties>
+            <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
+            <property name="hibernate.show_sql" value="false"/>
+        </properties>
+    </persistence-unit>
 </persistence>
