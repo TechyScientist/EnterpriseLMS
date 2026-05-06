@@ -127,12 +127,12 @@ p#success {
     margin-bottom: 10px;
 }
 
-p#warning {
+p#note {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: #E6B848;
-    color: black;
+    background-color: #032475;
+    color: white;
     border-radius: 16px;
     padding: 10px 20px;
     margin-bottom: 10px;
