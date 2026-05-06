@@ -1,13 +1,7 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
-<%
-    if(user == null) {
-        session.setAttribute("status", SC_UNAUTHORIZED);
-        response.sendRedirect("/library/signin.jsp");
-    }
-    else {
-        int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");%>
+<% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");%>
 
         <h3>Catalog Search</h3>
         <form action="" method="POST">
@@ -62,4 +56,3 @@
 </script>
 
 <%@ include file="assets/include/footer.jsp" %>
-<% } %>
