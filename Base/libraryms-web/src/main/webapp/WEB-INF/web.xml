@@ -11,4 +11,8 @@
         <servlet-name>SignOutServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.SignOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CatalogSearchServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.CatalogSearchServlet</servlet-class>
+    </servlet>
 </web-app>
