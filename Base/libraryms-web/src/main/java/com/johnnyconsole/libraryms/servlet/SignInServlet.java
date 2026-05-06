@@ -29,10 +29,10 @@ public class SignInServlet extends HttpServlet {
             if (!(username.isEmpty() && password.isEmpty())) {
                 User user;
                 if(username.startsWith("1")) {
-                    user = userDao.getUserByBarcode(username);
+                    user = userDao.findByBarcode(username);
                 }
                 else {
-                    user = userDao.getUserByUsername(username);
+                    user = userDao.findByUsername(username);
                 }
 
                 if (user != null) {

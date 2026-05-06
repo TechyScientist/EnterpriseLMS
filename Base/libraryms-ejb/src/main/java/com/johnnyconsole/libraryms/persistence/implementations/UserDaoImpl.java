@@ -13,7 +13,7 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext(unitName="user") private EntityManager manager;
 
     @Override
-    public User getUserByBarcode(String barcode) {
+    public User findByBarcode(String barcode) {
         try {
            return (User) manager.createNamedQuery("User.FindByBarcode")
                     .setParameter("barcode", barcode)
@@ -24,7 +24,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User findByUsername(String username) {
         try {
             return (User) manager.createNamedQuery("User.FindByUsername")
                     .setParameter("username", username)

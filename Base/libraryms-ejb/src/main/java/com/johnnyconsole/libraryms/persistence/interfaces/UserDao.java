@@ -6,6 +6,6 @@ import javax.ejb.Local;
 
 @Local
 public interface UserDao {
-    User getUserByBarcode(String barcode);
-    User getUserByUsername(String username);
+    User findByBarcode(String barcode);
+    User findByUsername(String username);
 }
