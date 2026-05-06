@@ -4,6 +4,8 @@
 <style>
     button {
         display: inline-block;
+        padding: 10px;
+        font-size: 16px;
         width: unset;
         margin: 5px;
     }
