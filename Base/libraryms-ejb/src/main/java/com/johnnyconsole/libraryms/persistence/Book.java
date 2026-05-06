@@ -20,7 +20,7 @@ public class Book {
 
     @Id
     public String copyBarcode;
-    public String titleBarcode, author, title,status, outTo;
+    public String titleBarcode, author, title, status, note, outTo;
     public Date dueDate;
 
     public Book() {
@@ -28,11 +28,16 @@ public class Book {
     }
 
     public Book(String copyBarcode, String titleBarcode, String author, String title) {
+        this(copyBarcode, titleBarcode, author, title, null);
+    }
+
+    public Book(String copyBarcode, String titleBarcode, String author, String title, String note) {
         this.copyBarcode = copyBarcode;
         this.titleBarcode = titleBarcode;
         this.author = author;
         this.title = title;
         this.status = "Available";
+        this.note = note;
     }
 
     //TODO: Remove this method -- used only for testing
@@ -44,6 +49,7 @@ public class Book {
                 .append("\n\tauthor: ").append(author)
                 .append("\n\ttitle: ").append(title)
                 .append("\n\tstatus: ").append(status)
+                .append(note != null ? "\n\tnote: " : "").append(note != null ? note : "")
                 .append(status.equals("Checked Out") ? "\n\t\toutTo: " : "").append(status.equals("Checked Out") ? outTo : "")
                 .append(status.equals("Checked Out") ? "\n\t\tdueDate: " : "").append(status.equals("Checked Out") ? dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) : "")
                 .append("\n}").toString();
