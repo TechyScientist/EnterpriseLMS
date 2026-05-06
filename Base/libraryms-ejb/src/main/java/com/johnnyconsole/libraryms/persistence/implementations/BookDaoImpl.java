@@ -6,6 +6,8 @@ import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +17,39 @@ public class BookDaoImpl implements BookDao {
 
     @PersistenceContext(unitName="book")
     private EntityManager manager;
+
+    @Override
+    public void create(Book book) {
+        manager.persist(book);
+    }
+
+    @Override
+    public void checkIn(Book book) {
+        book.status = "Available";
+        book.outTo = null;
+        book.dueDate = null;
+        manager.merge(book);
+    }
+
+    @Override
+    public void checkOut(Book book, String patronBarcode) {
+        book.status = "Checked Out";
+        book.outTo = patronBarcode;
+        book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+        manager.merge(book);
+    }
+
+    @Override
+    public void renew(Book book) {
+        book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+        manager.merge(book);
+    }
+
+    @Override
+    public void markLost(Book book) {
+        book.status = "Lost";
+        manager.merge(book);
+    }
 
     @Override
     public Book findByCopyCode(String barcode) {

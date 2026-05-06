@@ -7,6 +7,11 @@ import java.util.List;
 
 @Local
 public interface BookDao {
+    void create(Book book);
+    void checkIn(Book book);
+    void checkOut(Book book, String patronBarcode);
+    void renew(Book book);
+    void markLost(Book book);
     Book findByCopyCode(String barcode);
     List<Book> findByTitleBarcode(String username);
     List<Book> findByTitle(String title);
