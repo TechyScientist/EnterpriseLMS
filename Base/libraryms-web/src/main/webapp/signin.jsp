@@ -6,21 +6,6 @@
 %>
 <%@ include file="assets/include/header.jsp" %>
 
-<style>
-    .form-field {
-        position: relative;
-        margin: 20px 0;
-    }
-
-    .form-field label {
-        position: absolute;
-        top: -12px;
-        left: 10px;
-        padding: 0 5px;
-        background: var(--color-background);
-    }
-</style>
-
 <% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
 if(status != SC_OK) { %>
     <p id="error"><img src="assets/img/cross.png" style="width: 50px; aspect-ratio: 1/1; margin-right: 10px;" alt="Error"/><strong>Error</strong>:

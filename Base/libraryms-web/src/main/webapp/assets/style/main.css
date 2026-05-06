@@ -57,7 +57,7 @@ input:not([type="submit"]):focus, select:focus {
     border-color: var(--color-primary);
 }
 
-input[type="submit"], button {
+button {
     display: flex;
     width: 100%;
     align-items: center;
@@ -67,6 +67,19 @@ input[type="submit"], button {
     color: white;
     padding: 5px;
     border-radius: 10px;
+}
+
+.form-field {
+    position: relative;
+    margin: 20px 0;
+}
+
+.form-field label {
+    position: absolute;
+    top: -12px;
+    left: 10px;
+    padding: 0 5px;
+    background: var(--color-background);
 }
 
 button img {
