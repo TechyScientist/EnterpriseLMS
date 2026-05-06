@@ -1,10 +1,8 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
-<%@ page import="com.johnnyconsole.libraryms.persistence.User" %>
 <% String pageName = "dashboard", pageTitle = "Dashboard"; %>
 <%@ include file="assets/include/header.jsp" %>
 
 <%
-    User user = (User) session.getAttribute("user");
     if(user == null) {
         session.setAttribute("status", SC_UNAUTHORIZED);
         response.sendRedirect("/libraryms/signin.jsp");
