@@ -44,12 +44,12 @@ public class SignInServlet extends HttpServlet {
                         response.sendRedirect("/libraryms/dashboard.jsp");
                     }
                     else {
-                        session.setAttribute("status", SC_NOT_FOUND);
+                        session.setAttribute("status", SC_NOT_ACCEPTABLE);
                         response.sendRedirect("/libraryms/signin.jsp");
                     }
                 }
                 else {
-                    session.setAttribute("status", SC_NOT_ACCEPTABLE);
+                    session.setAttribute("status", SC_NOT_FOUND);
                     response.sendRedirect("/libraryms/signin.jsp");
                 }
             }

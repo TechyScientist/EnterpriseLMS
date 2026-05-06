@@ -14,10 +14,10 @@ if(status != SC_OK) { %>
                     That action must be done by the sign in form.
         <%          break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Missing or empty parameter.
+                    Invalid credentials, please try again.
         <%          break;
                 case SC_NOT_FOUND: %>
-                    Invalid credentials, please try again.
+                    User not found, please try again.
         <%          break;
                 case SC_UNAUTHORIZED: %>
                     You must be signed in to do that.
