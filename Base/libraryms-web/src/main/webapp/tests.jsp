@@ -1,4 +1,4 @@
-<% String pageName = "", pageTitle = null; %>
+<% String pageName = "", pageTitle = "Test Page"; %>
 <%@ include file="assets/include/header.jsp" %>
 
 <style>
