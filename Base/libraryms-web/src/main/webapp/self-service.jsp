@@ -7,27 +7,30 @@
 }
 else {
     int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
-    if(status != SC_OK) { %>
-        <p id="error"><strong>Error</strong>:
+    if(status != SC_OK && status != SC_ACCEPTED && status != SC_CONFLICT) { %>
+        <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
             <% switch(status) {
                 case SC_BAD_REQUEST: %>
-            That action must be done by the sign in form.
-            <%          break;
+                    Invalid copy barcode.
+            <%      break;
                 case SC_NOT_ACCEPTABLE: %>
-            Missing or empty parameter.
-            <%          break;
-                case SC_NOT_FOUND:
-                case SC_UNAUTHORIZED: %>
-            Invalid credentials, please try again.
-            <%          break;
+                    Missing or empty parameter.
+            <%      break;
+                case SC_NOT_FOUND:%>
+                    Copy not found. Please double check the barcode and try again.
+            <%      break;
             } %>
         </p>
         <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
-    <%  } else {
+    <%  } else if(status == SC_CONFLICT) { %>
+            <p id="note"><img src="assets/img/note.png" alt="Note"/><strong>Note</strong>: Copy already available</p>
+            <audio src="assets/sound/chime.mp3" style="display: none;" autoplay></audio>
+    <% }
+        else {
             if(session.getAttribute("play-sound") != null) {%>
-                <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
-    <%      }
-        } %>
+<audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%      }
+} %>
     <div style="display: grid; grid-template-columns: auto auto; gap: 50px; width: max-content;">
         <div>
             <h3>Check Out a Title</h3>
@@ -43,9 +46,10 @@ else {
                 <button type="submit" name="checkout-submit">Check Out <img src="assets/img/proceed.png" alt=""></button>
             </form>
         </div>
+        <!-- TODO: Replace this with renewal form -- users should not be able to check in, this should be done by library staff -->
         <div>
             <h3>Check In a Title</h3>
-            <form action="" method="POST">
+            <form action="CheckInServlet" method="POST">
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
                     <input type="text" id="copy-barcode" name="copy-barcode" required/>

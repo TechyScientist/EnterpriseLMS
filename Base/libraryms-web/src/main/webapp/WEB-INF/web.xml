@@ -15,4 +15,8 @@
         <servlet-name>CatalogSearchServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.CatalogSearchServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckInServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.CheckInServlet</servlet-class>
+    </servlet>
 </web-app>
