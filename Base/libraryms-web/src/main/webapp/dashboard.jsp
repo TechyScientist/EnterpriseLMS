@@ -4,6 +4,7 @@
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.BookDao" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <% String pageName = "dashboard", pageTitle = "Dashboard"; %>
 <%@ include file="assets/include/header.jsp" %>
 
@@ -62,7 +63,7 @@
                         <th><%= book.copyBarcode %></th>
                         <td><%= book.title %></td>
                         <td><%= book.author.replace("\n", "<br/>") %></td>
-                        <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate %></td>
+                        <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></td>
                     </tr>
                 <% } %>
             </table>
