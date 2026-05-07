@@ -5,12 +5,14 @@ import com.johnnyconsole.libraryms.persistence.Title;
 import com.johnnyconsole.libraryms.persistence.interfaces.HoldDao;
 import com.johnnyconsole.libraryms.persistence.interfaces.TitleDao;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unchecked")
+@Stateless
 public class TitleDaoImpl implements TitleDao {
 
     @PersistenceContext(unitName="title")
