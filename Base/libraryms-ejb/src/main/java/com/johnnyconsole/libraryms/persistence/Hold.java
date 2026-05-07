@@ -11,9 +11,10 @@ import java.time.format.DateTimeFormatter;
 @IdClass(HoldId.class)
 @NamedQueries({
         @NamedQuery(name="Hold.PatronHoldList", query="SELECT h FROM Hold h WHERE h.patronBarcode=:patron ORDER BY h.placed"),
-        @NamedQuery(name="Hold.TitleHoldList", query="SELECT h FROM Hold h WHERE h.titleBarcoode=:title ORDER BY h.placed")
+        @NamedQuery(name="Hold.TitleHoldList", query="SELECT h FROM Hold h WHERE h.titleBarcode=:title ORDER BY h.placed")
 })
 public class Hold {
+
     @Id
     public String patronBarcode, titleBarcode;
     public Timestamp placed;
