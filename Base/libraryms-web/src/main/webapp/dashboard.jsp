@@ -5,6 +5,10 @@
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.BookDao" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.HoldDao" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.Hold" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.TitleDao" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.Title" %>
 <% String pageName = "dashboard", pageTitle = "Dashboard"; %>
 <%@ include file="assets/include/header.jsp" %>
 
@@ -15,6 +19,8 @@
     }
     else {
         BookDao bookDao = (BookDao) session.getAttribute("BookDao");
+        HoldDao holdDao = (HoldDao) session.getAttribute("HoldDao");
+        TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
         int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
         if(status != SC_OK) { %>
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
@@ -46,7 +52,8 @@
         <% } %>
 
         <h3>My Library Account</h3>
-        <% List<Book> books = bookDao.checkedOutBy(user.barcode); %>
+        <% List<Book> books = bookDao.checkedOutBy(user.barcode);
+            List<Hold> holds = holdDao.listByPatronBarcode(user.barcode); %>
         <p style="margin-left: 10px;"><strong>My Patron Barcode</strong>: <%= user.barcode %></p>
         <p style="margin-left: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
         <p style="margin-left: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
@@ -59,12 +66,30 @@
                     <th>Due</th>
                 </tr>
 
-                <% for(Book book : books) { %>
+                <% for(Book book : books) {
+                    //TODO: FIX - does not work if the user has a checked out book
+                    Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                     <tr>
                         <th><%= book.copyBarcode %></th>
-                        <td><%= book.title %></td>
-                        <td><%= book.author.replace("\n", "<br/>") %></td>
+                        <td><%= titleInfo.title %></td>
+                        <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></td>
+                    </tr>
+                <% } %>
+            </table>
+        <% } %>
+        <p style="margin: 10px;"><strong>Holds</strong>: <%= holds.size() %></p>
+        <% if(!holds.isEmpty()) { %>
+            <table style="margin: 10px;">
+                <tr>
+                    <th>Hold For</th>
+                    <th>Placed</th>
+                </tr>
+
+                <% for(Hold hold : holds) { %>
+                    <tr>
+                        <td><strong><%= hold.titleBarcode %></strong> (<%= titleDao.findByBarcode(hold.titleBarcode).title %>)</td>
+                        <td><%= hold.placed.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy h:mm:ss a")) %></td>
                     </tr>
                 <% } %>
             </table>
