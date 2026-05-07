@@ -2,6 +2,7 @@ package com.johnnyconsole.libraryms.servlet;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.johnnyconsole.libraryms.persistence.User;
+import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
 import com.johnnyconsole.libraryms.persistence.interfaces.UserDao;
 
 import javax.ejb.EJB;
@@ -19,6 +20,9 @@ public class SignInServlet extends HttpServlet {
 
     @EJB
     private UserDao userDao;
+
+    @EJB
+    private BookDao bookDao;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
@@ -41,6 +45,8 @@ public class SignInServlet extends HttpServlet {
                             .verified) {
                         session.setAttribute("user", user);
                         session.setAttribute("play-sound", "");
+                        session.setAttribute("UserDao", userDao);
+                        session.setAttribute("BookDao", bookDao);
                         response.sendRedirect("/library/dashboard.jsp");
                     }
                     else {
