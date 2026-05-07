@@ -2,6 +2,7 @@
 <%@ page import="com.johnnyconsole.libraryms.persistence.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.TitleDao"%>
 <%@ page import="com.johnnyconsole.libraryms.persistence.Title" %>
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
@@ -51,7 +52,7 @@
     <% if(session.getAttribute("book") != null) {
         Book book = (Book) session.getAttribute("book");
         TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
-        Title titleInfo = titleDao.searchByBarcode(book.titleBarcode); %>
+        Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
         <table>
             <tr>
                 <th>Copy Barcode</th>
@@ -70,7 +71,7 @@
     else if(session.getAttribute("booklist") != null) {
         List<Book> booklist = (List<Book>) session.getAttribute("booklist");
         TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
-        Title titleInfo = titleDao.searchByBarcode(booklist.get(0).titleBarcode); %>
+        Title titleInfo = titleDao.findByBarcode(booklist.get(0).titleBarcode); %>
         <p><strong><%= booklist.size() %></strong> copies found.</p>
         <table>
             <tr>
