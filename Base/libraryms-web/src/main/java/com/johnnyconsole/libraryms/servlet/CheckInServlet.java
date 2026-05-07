@@ -36,10 +36,13 @@ public class CheckInServlet extends HttpServlet {
                         response.sendRedirect("/library/self-service.jsp");
                     } else if (!book.status.equals("Available")) {
                         //TODO: calculate if the book is late, on time or has a note -- need 3 different status codes
+                        bookDao.checkIn(book);
                         session.setAttribute("status", SC_ACCEPTED);
+                        session.setAttribute("operation", "checkin");
                         response.sendRedirect("/library/self-service.jsp");
                     } else {
                         session.setAttribute("status", SC_CONFLICT);
+                        session.setAttribute("operation", "checkin");
                         response.sendRedirect("/library/self-service.jsp");
                     }
 
@@ -48,6 +51,10 @@ public class CheckInServlet extends HttpServlet {
                     response.sendRedirect("/library/self-service.jsp");
                 }
             }
+        }
+        else {
+            session.setAttribute("status", SC_UNAUTHORIZED);
+            response.sendRedirect("/library/signin.jsp");
         }
     }
 }
