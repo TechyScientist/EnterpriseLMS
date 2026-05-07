@@ -60,7 +60,7 @@
                 <th><%= book.copyBarcode %></th>
                 <td><%= book.title %></td>
                 <td><%= book.author.replace("\n", "<br/>") %></td>
-                <td><%= book.status %> <% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
             </tr>
         </table>
 <% }
@@ -79,7 +79,7 @@
                         <th><%= book.copyBarcode %></th>
                         <td><%= book.title %></td>
                         <td><%= book.author.replace("\n", "<br/>") %></td>
-                        <td><%= book.status %> <% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                        <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
                     </tr>
             <% } %>
         </table>
@@ -125,5 +125,7 @@
     });
 </script>
 <% session.removeAttribute("status");
-session.removeAttribute("criteria");%>
+session.removeAttribute("criteria");
+session.removeAttribute("book");
+session.removeAttribute("booklist"); %>
 <%@ include file="assets/include/footer.jsp" %>
