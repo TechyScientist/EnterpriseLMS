@@ -41,7 +41,7 @@ public class TitleDaoImpl implements TitleDao {
     @Override
     public Title findByBarcode(String barcode) {
         try {
-            return (Title) manager.createNamedQuery("Title.findByBarcode")
+            return (Title) manager.createNamedQuery("Title.FindByBarcode")
                     .setParameter("barcode", barcode)
                     .getSingleResult();
         } catch (Exception ex) {
