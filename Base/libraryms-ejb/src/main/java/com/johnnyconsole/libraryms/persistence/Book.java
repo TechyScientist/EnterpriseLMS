@@ -20,22 +20,20 @@ public class Book {
 
     @Id
     public String copyBarcode;
-    public String titleBarcode, author, title, status, note, outTo;
+    public String titleBarcode, status, note, outTo;
     public Date dueDate;
 
     public Book() {
 
     }
 
-    public Book(String copyBarcode, String titleBarcode, String author, String title) {
-        this(copyBarcode, titleBarcode, author, title, null);
+    public Book(String copyBarcode, String titleBarcode) {
+        this(copyBarcode, titleBarcode, null);
     }
 
-    public Book(String copyBarcode, String titleBarcode, String author, String title, String note) {
+    public Book(String copyBarcode, String titleBarcode, String note) {
         this.copyBarcode = copyBarcode;
         this.titleBarcode = titleBarcode;
-        this.author = author;
-        this.title = title;
         this.status = "Available";
         this.note = note;
     }
@@ -46,8 +44,6 @@ public class Book {
         return new StringBuilder()
                 .append("Book {\n\tcopyBarcode: ").append(copyBarcode)
                 .append("\n\ttileBarcode: ").append(titleBarcode)
-                .append("\n\tauthor: ").append(author)
-                .append("\n\ttitle: ").append(title)
                 .append("\n\tstatus: ").append(status)
                 .append(note != null ? "\n\tnote: " : "").append(note != null ? note : "")
                 .append(status.equals("Checked Out") ? "\n\t\toutTo: " : "").append(status.equals("Checked Out") ? outTo : "")
