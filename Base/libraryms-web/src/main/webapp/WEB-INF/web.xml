@@ -19,4 +19,8 @@
         <servlet-name>CheckInServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.CheckInServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckOutServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.CheckOutServlet</servlet-class>
+    </servlet>
 </web-app>
