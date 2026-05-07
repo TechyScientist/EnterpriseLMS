@@ -67,7 +67,7 @@ public class CatalogSearchServlet extends HttpServlet {
                 }
                 break;
                 case "title": {
-                    String title = request.getParameter("title");
+                    String title = request.getParameter("criteria");
                     List<Book> books = bookDao.findByTitle(title);
                     if (books.isEmpty()) {
                         session.setAttribute("status", SC_NOT_FOUND);
@@ -80,7 +80,7 @@ public class CatalogSearchServlet extends HttpServlet {
                 }
                 break;
                 default:
-                    String author = request.getParameter("author");
+                    String author = request.getParameter("criteria");
                     List<Book> books = bookDao.findByAuthor(author);
                     if (books.isEmpty()) {
                         session.setAttribute("status", SC_NOT_FOUND);

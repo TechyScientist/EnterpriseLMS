@@ -77,7 +77,7 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findByTitle(String title) {
         try {
             return (List<Book>)  manager.createNamedQuery("Book.SearchByTitle")
-                    .setParameter("criteria", title)
+                    .setParameter("criteria", "%" + title + "%")
                     .getResultList();
         } catch (Exception ex) {
             return Collections.emptyList();
@@ -88,7 +88,7 @@ public class BookDaoImpl implements BookDao {
     public List<Book> findByAuthor(String author) {
         try {
             return (List<Book>)  manager.createNamedQuery("Book.SearchByAuthor")
-                    .setParameter("criteria", author)
+                    .setParameter("criteria", "%" + author + "%")
                     .getResultList();
         } catch (Exception ex) {
             return Collections.emptyList();

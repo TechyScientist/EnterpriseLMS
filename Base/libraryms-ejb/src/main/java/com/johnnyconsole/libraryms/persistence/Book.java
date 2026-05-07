@@ -9,8 +9,8 @@ import java.time.format.DateTimeFormatter;
 @NamedQueries({
         @NamedQuery(name="Book.SearchByCopyBarcode", query="SELECT b FROM Book b WHERE b.copyBarcode=:barcode"),
         @NamedQuery(name="Book.SearchByTitleBarcode", query="SELECT b FROM Book b WHERE b.titleBarcode=:barcode"),
-        @NamedQuery(name="Book.SearchByTitle", query="SELECT b FROM Book b WHERE b.title LIKE '%:criteria%'"),
-        @NamedQuery(name="Book.SearchByAuthor", query="SELECT b FROM Book b WHERE b.author LIKE '%:criteria%'"),
+        @NamedQuery(name="Book.SearchByTitle", query="SELECT b FROM Book b WHERE b.title LIKE  :criteria"),
+        @NamedQuery(name="Book.SearchByAuthor", query="SELECT b FROM Book b WHERE b.author LIKE :criteria"),
         @NamedQuery(name="Book.CheckedOutByPatron", query="SELECT b FROM Book b WHERE b.status='Checked Out' AND b.outTo=:patron"),
         @NamedQuery(name="Book.ListAvailable", query="SELECT b FROM Book b WHERE b.status='Available'"),
         @NamedQuery(name="Book.ListCheckedOut", query="SELECT b FROM Book b WHERE b.status='Checked Out'"),
