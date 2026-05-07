@@ -67,7 +67,6 @@
                 </tr>
 
                 <% for(Book book : books) {
-                    //TODO: FIX - does not work if the user has a checked out book
                     Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                     <tr>
                         <th><%= book.copyBarcode %></th>
