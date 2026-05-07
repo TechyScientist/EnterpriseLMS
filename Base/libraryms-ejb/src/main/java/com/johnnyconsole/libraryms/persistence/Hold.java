@@ -23,7 +23,7 @@ public class Hold {
 
     }
 
-    public Hold(String patronBarcode, String titleBarcode, Timestamp placed) {
+    public Hold(String patronBarcode, String titleBarcode) {
         this.patronBarcode = patronBarcode;
         this.titleBarcode = titleBarcode;
     }
