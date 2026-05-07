@@ -33,7 +33,7 @@ else {
     <%          }
         } else if(status == SC_ACCEPTED) {
             String operation = (String) session.getAttribute("operation"); %>
-            <p id="success"><img src="assets/img/check.png" alt="Success"/><%= operation.equals("checkin") ? "Check In" : "Check Out" %> successful. <% if(operation.equals("checkout")) { %> Your book is due <strong><%= (String) session.getAttribute("due-date") %></strong>.<% } %></p>
+            <p id="success"><img src="assets/img/check.png" alt="Success"/><%= operation.equals("checkin") ? "Check In" : "Check Out" %> successful. <% if(operation.equals("checkout")) { %> Your book is due&nbsp;<strong><%= (String) session.getAttribute("due-date") %></strong>.<% } %></p>
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
     <% }%>
     <div style="display: grid; grid-template-columns: auto auto; gap: 50px; width: max-content;">
