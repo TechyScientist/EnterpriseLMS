@@ -1,4 +1,7 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.Book" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
 <% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
@@ -16,8 +19,6 @@
 
             </p>
             <audio src="assets/sound/bonk.mp3" style="display:none;" autoplay></audio>
-    <% } else if(status == SC_ACCEPTED) { %>
-        <audio src="assets/sound/ding.mp3" style="display:none;" autoplay></audio>
     <% } %>
         <h3>Catalog Search</h3>
         <form action="CatalogSearchServlet" method="POST">
@@ -44,7 +45,48 @@
             </div>
             <button type="submit" id="search-submit" name="search-submit">Search <img src="assets/img/proceed.png" alt="Search"/></button>
         </form>
-
+<% if(status == SC_ACCEPTED) { %>
+    <h3>Search Result</h3>
+    <% if(session.getAttribute("book") != null) {
+        Book book = (Book) session.getAttribute("book"); %>
+        <table>
+            <tr>
+                <th>Copy Barcode</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Status</th>
+            </tr>
+            <tr>
+                <th><%= book.copyBarcode %></th>
+                <td><%= book.title %></td>
+                <td><%= book.author.replace("\n", "<br/>") %></td>
+                <td><%= book.status %> <% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+            </tr>
+        </table>
+<% }
+    else if(session.getAttribute("booklist") != null) {
+        List<Book> booklist = (List<Book>) session.getAttribute("booklist"); %>
+        <p><strong><%= booklist.size() %></strong> copies found.</p>
+        <table>
+            <tr>
+                <th>Copy Barcode</th>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Status</th>
+            </tr>
+            <% for(Book book : booklist) { %>
+                    <tr>
+                        <th><%= book.copyBarcode %></th>
+                        <td><%= book.title %></td>
+                        <td><%= book.author.replace("\n", "<br/>") %></td>
+                        <td><%= book.status %> <% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                    </tr>
+            <% } %>
+        </table>
+<%
+    } %>
+    <audio src="assets/sound/ding.mp3" style="display:none;" autoplay></audio>
+<% } %>
 <script>
     const searchBy = document.getElementById("searchBy");
     const copyBarcodeSearch = document.getElementById("copyBarcodeSearch");

@@ -116,6 +116,16 @@ nav a#current, nav a:hover {
     border-bottom: 2px solid var(--color-primary);
 }
 
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    padding: 10px;
+    border: 1px solid black;
+    text-align: center;
+}
+
 p#success {
     display: flex;
     align-items: center;
