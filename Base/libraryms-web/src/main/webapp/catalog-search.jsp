@@ -2,6 +2,7 @@
 <%@ page import="com.johnnyconsole.libraryms.persistence.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.Title" %>
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
 <% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
@@ -48,7 +49,9 @@
 <% if(status == SC_ACCEPTED) { %>
     <h3>Search Result</h3>
     <% if(session.getAttribute("book") != null) {
-        Book book = (Book) session.getAttribute("book"); %>
+        Book book = (Book) session.getAttribute("book");
+        TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
+        Title titleInfo = titleDao.searchByBarcode(book.titleBarcode); %>
         <table>
             <tr>
                 <th>Copy Barcode</th>
@@ -58,14 +61,16 @@
             </tr>
             <tr>
                 <th><%= book.copyBarcode %></th>
-                <td><%= book.title %></td>
-                <td><%= book.author.replace("\n", "<br/>") %></td>
+                <td><%= titleInfo.title %></td>
+                <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                 <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
             </tr>
         </table>
 <% }
     else if(session.getAttribute("booklist") != null) {
-        List<Book> booklist = (List<Book>) session.getAttribute("booklist"); %>
+        List<Book> booklist = (List<Book>) session.getAttribute("booklist");
+        TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
+        Title titleInfo = titleDao.searchByBarcode(booklist.get(0).titleBarcode); %>
         <p><strong><%= booklist.size() %></strong> copies found.</p>
         <table>
             <tr>
@@ -77,8 +82,8 @@
             <% for(Book book : booklist) { %>
                     <tr>
                         <th><%= book.copyBarcode %></th>
-                        <td><%= book.title %></td>
-                        <td><%= book.author.replace("\n", "<br/>") %></td>
+                        <td><%= titleInfo.title %></td>
+                        <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
                     </tr>
             <% } %>
