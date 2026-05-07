@@ -47,10 +47,11 @@
 
         <h3>My Library Account</h3>
         <% List<Book> books = bookDao.checkedOutBy(user.barcode); %>
+        <p style="margin-left: 10px;"><strong>My Patron Barcode</strong>: <%= user.barcode %></p>
         <p style="margin-left: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
         <p style="margin-left: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
         <% if(!books.isEmpty()) { %>
-            <table style="margin-left: 10px; margin-top: 5px;">
+            <table style="margin: 10px;">
                 <tr>
                     <th>Copy Barcode</th>
                     <th>Title</th>
@@ -68,7 +69,7 @@
                 <% } %>
             </table>
         <% } %>
-        <p style="margin-left: 10px;">Visit the <a href="self-service.jsp">Self Service</a> page to check out materials, renew checked out materials, or place holds.</p>
+        <p style="margin: 10px;">Visit the <a href="self-service.jsp">Self Service</a> page to check out materials, renew checked out materials, or place holds.</p>
 <% session.removeAttribute("status");
 session.removeAttribute("play-sound");
 } %>
