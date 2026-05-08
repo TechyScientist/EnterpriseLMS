@@ -4,7 +4,11 @@ import java.io.Serializable;
 
 public class HoldId implements Serializable {
 
-    private final String patronBarcode, titleBarcode;
+    private String patronBarcode, titleBarcode;
+
+    public HoldId() {
+
+    }
 
     public HoldId(String patronBarcode, String titleBarcode) {
         this.patronBarcode = patronBarcode;
