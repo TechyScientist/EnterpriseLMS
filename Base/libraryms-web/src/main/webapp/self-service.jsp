@@ -50,29 +50,19 @@ else {
                 <button type="submit" name="checkout-submit">Check Out <img src="assets/img/proceed.png" alt=""></button>
             </form>
         </div>
-        <!-- TODO: Replace this with renewal form -- users should not be able to check in, this should be done by library staff -->
         <div>
-            <h3>Check In a Title</h3>
-            <form action="CheckInServlet" method="POST">
+            <h3>Request a Hold</h3>
+            <form action="RequestHoldServlet" method="POST">
+                <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
                 <div class="form-field">
-                    <label for="copy-barcode">Copy Barcode</label>
-                    <input type="text" id="copy-barcode" name="copy-barcode" required/>
+                    <label for="title-barcode">Title Barcode</label>
+                    <input type="text" id="title-barcode" name="title-barcode" required/>
                 </div>
-                <button type="submit" name="checkin-submit">Check In <img src="assets/img/proceed.png" alt=""></button>
+                <button type="submit" name="hold-submit">Submit Hold Request <img src="assets/img/proceed.png" alt=""></button>
             </form>
         </div>
     </div>
-    <div>
-        <h3>Request a Hold</h3>
-        <form action="RequestHoldServlet" method="POST">
-            <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
-            <div class="form-field">
-                <label for="title-barcode">Title Barcode</label>
-                <input type="text" id="title-barcode" name="title-barcode" required/>
-            </div>
-            <button type="submit" name="hold-submit">Submit Hold Request <img src="assets/img/proceed.png" alt=""></button>
-        </form>
-    </div>
+
     <%@ include file="assets/include/footer.jsp" %>
 <%  session.removeAttribute("status");
     session.removeAttribute("operation");
