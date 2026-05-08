@@ -22,7 +22,7 @@
         HoldDao holdDao = (HoldDao) session.getAttribute("HoldDao");
         TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
         int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
-        if(status != SC_OK) { %>
+        if(status != SC_OK && status != SC_ACCEPTED) { %>
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
                 <% switch(status) {
                     case SC_BAD_REQUEST: %>
@@ -38,7 +38,10 @@
                 } %>
             </p>
             <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
-    <%  } else {
+    <%  } else if(status == SC_ACCEPTED) { %>
+            <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Hold released</p>
+            <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+    <% }  else {
             if(session.getAttribute("play-sound") != null) {%>
                 <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
     <%      }
@@ -83,12 +86,20 @@
                 <tr>
                     <th>Hold For</th>
                     <th>Placed</th>
+                    <th>Release</th>
                 </tr>
 
                 <% for(Hold hold : holds) { %>
                     <tr>
                         <td><strong><%= hold.titleBarcode %></strong> (<%= titleDao.findByBarcode(hold.titleBarcode).title %>)</td>
                         <td><%= hold.placed.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy h:mm:ss a")) %></td>
+                        <td>
+                            <form action="ReleaseHoldServlet" method="post" style="margin: unset;">
+                                <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
+                                <input type="hidden" name="title-barcode" id="title-barcode" value="<%= hold.titleBarcode %>"/>
+                                <button type="submit" name="release-submit">Release <img src="assets/img/proceed.png" alt=""/></button>
+                            </form>
+                        </td>
                     </tr>
                 <% } %>
             </table>

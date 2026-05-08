@@ -37,6 +37,18 @@ public class HoldDaoImpl implements HoldDao {
     }
 
     @Override
+    public Hold retreive(String patronBarcode, String titleBarcode) {
+        try {
+            return (Hold) manager.createNamedQuery("Hold.RetrieveHold")
+                    .setParameter("patron", patronBarcode)
+                    .setParameter("title", titleBarcode)
+                    .getSingleResult();
+        } catch (Exception ex) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Hold> listByPatronBarcode(String patronBarcode) {
         try {
             return (List<Hold>) manager.createNamedQuery("Hold.PatronHoldList")

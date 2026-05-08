@@ -9,6 +9,7 @@ import java.util.List;
 public interface HoldDao {
     boolean place(Hold hold);
     boolean remove(Hold hold);
+    Hold retreive(String patronBarcode, String titleBarcode);
     List<Hold> listByPatronBarcode(String patronBarcode);
     List<Hold> listByTitleBarcode(String titleBarcode);
     Hold nextForTitleBarcode(String titleBarcode);

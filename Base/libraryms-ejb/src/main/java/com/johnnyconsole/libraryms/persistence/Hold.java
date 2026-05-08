@@ -10,6 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Table(name="libraryms_holds")
 @IdClass(HoldId.class)
 @NamedQueries({
+        @NamedQuery(name="Hold.RetrieveHold", query="SELECT h FROM Hold h WHERE h.patronBarcode=:patron AND h.titleBarcode=:title"),
         @NamedQuery(name="Hold.PatronHoldList", query="SELECT h FROM Hold h WHERE h.patronBarcode=:patron ORDER BY h.placed"),
         @NamedQuery(name="Hold.TitleHoldList", query="SELECT h FROM Hold h WHERE h.titleBarcode=:title ORDER BY h.placed")
 })
