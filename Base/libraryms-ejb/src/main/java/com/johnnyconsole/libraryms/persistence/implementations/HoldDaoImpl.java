@@ -19,6 +19,7 @@ public class HoldDaoImpl implements HoldDao {
     @Override
     public boolean place(Hold hold) {
         try {
+            if(retreive(hold.patronBarcode, hold.titleBarcode) != null) return false;
             manager.persist(hold);
             return true;
         } catch (Exception ex) {
