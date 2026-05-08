@@ -2,7 +2,10 @@ package com.johnnyconsole.libraryms.servlet;
 
 import com.johnnyconsole.libraryms.interfaces.BarcodeBean;
 import com.johnnyconsole.libraryms.persistence.Book;
+import com.johnnyconsole.libraryms.persistence.Hold;
+import com.johnnyconsole.libraryms.persistence.User;
 import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
+import com.johnnyconsole.libraryms.persistence.interfaces.HoldDao;
 
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 
 import static javax.servlet.http.HttpServletResponse.*;
 
@@ -21,34 +26,54 @@ public class CheckInServlet extends HttpServlet {
     private BookDao bookDao;
 
     @EJB
+    private HoldDao holdDao;
+
+    @EJB
     private BarcodeBean barcodeBean;
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
-        if (session.getAttribute("user") != null) {
-            if (request.getParameter("checkin-submit") != null) {
-                String barcode = request.getParameter("copy-barcode");
-                if (barcode.charAt(0) >= '2' && barcode.charAt(0) <= '8' && barcodeBean.isValid(barcode)) {
-                    Book book = bookDao.findByCopyCode(barcode);
-                    if (book == null) {
-                        session.setAttribute("status", SC_NOT_FOUND);
-                        response.sendRedirect("/library/self-service.jsp");
-                    } else if (!book.status.equals("Available")) {
-                        //TODO: calculate if the book is late, on time or has a note -- need 3 different status codes
-                        bookDao.checkIn(book);
-                        session.setAttribute("status", SC_ACCEPTED);
-                        session.setAttribute("operation", "checkin");
-                        response.sendRedirect("/library/self-service.jsp");
-                    } else {
-                        session.setAttribute("status", SC_CONFLICT);
-                        session.setAttribute("operation", "checkin");
-                        response.sendRedirect("/library/self-service.jsp");
-                    }
+        User user = (User) session.getAttribute("user");
+        if (user != null) {
+            if(user.libraryStaff || user.libraryAdmin) {
+                if (request.getParameter("checkin-submit") != null) {
+                    String barcode = request.getParameter("copy-barcode");
+                    if (barcode.charAt(0) >= '2' && barcode.charAt(0) <= '8' && barcodeBean.isValid(barcode)) {
+                        Book book = bookDao.findByCopyCode(barcode);
+                        if (book == null) {
+                            session.setAttribute("status", SC_NOT_FOUND);
+                            response.sendRedirect("/library/staff.jsp");
+                        } else if (!book.status.equals("Available")) {
+                            Hold hold = holdDao.nextForTitleBarcode(book.titleBarcode);
+                            if (hold != null) {
+                                session.setAttribute("status", SC_CONTINUE);
+                                session.setAttribute("patron", hold.patronBarcode);
+                                session.setAttribute("operation", "checkin");
+                            } else if (book.dueDate.before(Date.valueOf(LocalDate.now()))) {
+                                session.setAttribute("status", SC_PARTIAL_CONTENT);
+                                session.setAttribute("due", book.dueDate);
+                                session.setAttribute("operation", "checkin");
+                            } else {
+                                session.setAttribute("status", SC_ACCEPTED);
+                                session.setAttribute("operation", "checkin");
+                            }
+                            bookDao.checkIn(book);
+                            response.sendRedirect("/library/staff.jsp");
+                        } else {
+                            session.setAttribute("status", SC_CONFLICT);
+                            session.setAttribute("operation", "checkin");
+                            response.sendRedirect("/library/staff.jsp");
+                        }
 
-                } else {
-                    session.setAttribute("status", SC_BAD_REQUEST);
-                    response.sendRedirect("/library/self-service.jsp");
+                    } else {
+                        session.setAttribute("status", SC_BAD_REQUEST);
+                        response.sendRedirect("/library/staff.jsp");
+                    }
                 }
+            }
+            else {
+                session.setAttribute("status", SC_UNAUTHORIZED);        //TODO: Handle this error code on dashboard page
+                response.sendRedirect("/library/dashboard.jsp");
             }
         }
         else {
