@@ -24,10 +24,7 @@ else {
         </p>
         <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
     <%  } else if(status == SC_CONFLICT) {
-            if(operation.equals("checkin")) { %>
-                <p id="note"><img src="assets/img/note.png" alt="Note"/><strong>Note</strong>: Copy already available.</p>
-                <audio src="assets/sound/chime.mp3" style="display: none;" autoplay></audio>
-            <% } else if(operation.equals("checkout")) { %>
+            if(operation.equals("checkout")) { %>
                 <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>: Copy is either checked out or lost.</p>
                 <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
     <%          } else if(operation.equals("hold")) { %>
@@ -35,14 +32,14 @@ else {
                 <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
              <% }
         } else if(status == SC_ACCEPTED) { %>
-            <p id="success"><img src="assets/img/check.png" alt="Success"/><%= operation.equals("checkin") ? "Check In" : operation.equals("hold") ? "Hold" : "Check Out" %> successful. <% if(operation.equals("checkout")) { %> Your book is due&nbsp;<strong><%= (String) session.getAttribute("due-date") %></strong>.<% } %></p>
+            <p id="success"><img src="assets/img/check.png" alt="Success"/><%= operation.equals("hold") ? "Hold" : "Check Out" %> successful. <% if(operation.equals("checkout")) { %> Your book is due&nbsp;<strong><%= (String) session.getAttribute("due-date") %></strong>.<% } %></p>
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
      <% }%>
     <div style="display: grid; grid-template-columns: auto auto; gap: 50px; width: max-content;">
         <div>
             <h3>Check Out a Title</h3>
             <form action="CheckOutServlet" method="POST">
-                <input type="hidden" name="referrer" id="referrer" value="/library/staff.jsp" />
+                <input type="hidden" name="referrer" id="referrer" value="/library/self-service.jsp" />
                 <input type="hidden" id="patron-barcode" name="patron-barcode" value="<%= user.barcode %>"/>
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
