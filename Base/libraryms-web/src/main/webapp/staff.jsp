@@ -6,7 +6,17 @@
     session.setAttribute("status", SC_UNAUTHORIZED);
     response.sendRedirect("/library/signin.jsp");
 } else { %>
-    <div style="display: grid; grid-template-columns: auto auto; gap: 0 50px; width: max-content;">
+    <div style="display: grid; grid-template-columns: auto auto auto; gap: 0 50px; width: max-content;">
+        <div>
+            <h3>Quick Action: Check Copy Status</h3>
+            <form action="" method="POST">
+                <div class="form-field">
+                    <label for="copy-barcode">Copy Barcode</label>
+                    <input type="text" id="copy-barcode" name="copy-barcode" required/>
+                </div>
+                <button type="submit" name="status-check-submit">Check Status <img src="assets/img/proceed.png" alt=""></button>
+            </form>
+        </div>
         <div>
             <h3>Quick Action: Check Out a Title</h3>
             <form action="CheckOutServlet" method="POST">
