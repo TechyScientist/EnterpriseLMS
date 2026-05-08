@@ -10,6 +10,7 @@
         <div>
             <h3>Quick Action: Check Out a Title</h3>
             <form action="CheckOutServlet" method="POST">
+                <input type="hidden" name="referrer" id="referrer" value="/library/staff.jsp" />
                 <div class="form-field">
                     <label for="patron-barcode">Patron Barcode</label>
                     <input type="text" id="patron-barcode" name="patron-barcode" required/>

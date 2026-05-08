@@ -29,28 +29,29 @@ public class CheckOutServlet extends HttpServlet {
         if (session.getAttribute("user") != null) {
             if (request.getParameter("checkout-submit") != null) {
                 String patron = request.getParameter("patron-barcode"),
-                        copy = request.getParameter("copy-barcode");
+                        copy = request.getParameter("copy-barcode"),
+                        referrer = request.getParameter("referrer");
                 if (copy.charAt(0) >= '2' && copy.charAt(0) <= '8' && barcodeBean.isValid(copy) &&
                     patron.startsWith("13870") && barcodeBean.isValid(patron)) {
                     Book book = bookDao.findByCopyCode(copy);
                     if (book == null) {
                         session.setAttribute("status", SC_NOT_FOUND);
-                        response.sendRedirect("/library/self-service.jsp");
+                        response.sendRedirect(referrer);
                     } else if (!book.status.equals("Available")) {
                         session.setAttribute("status", SC_CONFLICT);
                         session.setAttribute("operation", "checkout");
-                        response.sendRedirect("/library/self-service.jsp");
+                        response.sendRedirect(referrer);
                     } else {
                         bookDao.checkOut(book, patron);
                         session.setAttribute("status", SC_ACCEPTED);
                         session.setAttribute("operation", "checkout");
                         session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
-                        response.sendRedirect("/library/self-service.jsp");
+                        response.sendRedirect(referrer);
                     }
 
                 } else {
                     session.setAttribute("status", SC_BAD_REQUEST);
-                    response.sendRedirect("/library/self-service.jsp");
+                    response.sendRedirect(referrer);
                 }
             }
         }

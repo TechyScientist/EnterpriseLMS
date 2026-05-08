@@ -42,6 +42,7 @@ else {
         <div>
             <h3>Check Out a Title</h3>
             <form action="CheckOutServlet" method="POST">
+                <input type="hidden" name="referrer" id="referrer" value="/library/staff.jsp" />
                 <input type="hidden" id="patron-barcode" name="patron-barcode" value="<%= user.barcode %>"/>
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
