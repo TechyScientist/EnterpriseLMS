@@ -17,7 +17,7 @@ public class Hold {
 
     @Id
     public String patronBarcode, titleBarcode;
-    public Timestamp placed;
+    @Column(insertable = false, updatable = false) public Timestamp placed;
 
     public Hold() {
 
