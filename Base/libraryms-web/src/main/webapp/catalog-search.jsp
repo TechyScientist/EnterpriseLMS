@@ -56,12 +56,14 @@
         <table>
             <tr>
                 <th>Copy Barcode</th>
+                <th>Title Barcode</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Status</th>
             </tr>
             <tr>
                 <th><%= book.copyBarcode %></th>
+                <th><%= book.titleBarcode %></th>
                 <td><%= titleInfo.title %></td>
                 <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                 <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
@@ -76,6 +78,7 @@
         <table>
             <tr>
                 <th>Copy Barcode</th>
+                <th>Title Barcode</th>
                 <th>Title</th>
                 <th>Author</th>
                 <th>Status</th>
@@ -83,6 +86,7 @@
             <% for(Book book : booklist) { %>
                     <tr>
                         <th><%= book.copyBarcode %></th>
+                        <th><%= book.titleBarcode %></th>
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
