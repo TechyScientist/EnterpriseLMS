@@ -1,14 +1,13 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
-<%@ page import="com.johnnyconsole.libraryms.persistence.Book" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.time.LocalDate" %>
 <%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.BookDao" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.HoldDao" %>
-<%@ page import="com.johnnyconsole.libraryms.persistence.Hold" %>
 <%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.TitleDao" %>
-<%@ page import="com.johnnyconsole.libraryms.persistence.Title" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.interfaces.FineDao" %>
+<%@ page import="com.johnnyconsole.libraryms.persistence.*" %>
 <% String pageName = "dashboard", pageTitle = "Dashboard"; %>
 <%@ include file="assets/include/header.jsp" %>
 
@@ -19,6 +18,7 @@
     }
     else {
         BookDao bookDao = (BookDao) session.getAttribute("BookDao");
+        FineDao fineDao = (FineDao) session.getAttribute("FineDao");
         HoldDao holdDao = (HoldDao) session.getAttribute("HoldDao");
         TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
         int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
@@ -57,9 +57,25 @@
         <h3>My Library Account</h3>
         <% List<Book> books = bookDao.checkedOutBy(user.barcode),
                 ready = bookDao.onHoldFor(user.barcode);
+            List<Fine> fines = fineDao.listForPatron(user.barcode);
             List<Hold> holds = holdDao.listByPatronBarcode(user.barcode);%>
         <p style="margin: 0 10px 10px 10px;"><strong>Patron Barcode</strong>: <%= user.barcode %></p>
-        <p style="margin: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
+        <p style="margin: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", fines.isEmpty() ? 0f : fines.stream().mapToDouble(Fine::getAmount).sum()) %></p>
+        <% if(!fines.isEmpty()) { %>
+            <table style="margin: 10px;">
+                <tr>
+                    <th>Added</th>
+                    <th>Reason</th>
+                    <th>Amount</th>
+                </tr>
+                <% for(Fine fine : fines) { %>
+                    <tr>
+                        <td><%= fine.added.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy h:mm:ss a")) %></td>
+                        <td><%= fine.note.replace("\n", "<br/>") %></td>
+                        <td><%= String.format("$%.2f", fine.amount) %></td>
+                    </tr>
+            </table>
+        <% } %>
         <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
         <% if(!books.isEmpty()) { %>
             <table style="margin: 10px;">
