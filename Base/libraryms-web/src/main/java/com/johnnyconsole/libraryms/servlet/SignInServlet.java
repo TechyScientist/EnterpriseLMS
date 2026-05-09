@@ -2,10 +2,7 @@ package com.johnnyconsole.libraryms.servlet;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import com.johnnyconsole.libraryms.persistence.User;
-import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
-import com.johnnyconsole.libraryms.persistence.interfaces.HoldDao;
-import com.johnnyconsole.libraryms.persistence.interfaces.TitleDao;
-import com.johnnyconsole.libraryms.persistence.interfaces.UserDao;
+import com.johnnyconsole.libraryms.persistence.interfaces.*;
 
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +19,9 @@ public class SignInServlet extends HttpServlet {
 
     @EJB
     private UserDao userDao;
+
+    @EJB
+    private FineDao fineDao;
 
     @EJB
     private BookDao bookDao;
@@ -54,6 +54,7 @@ public class SignInServlet extends HttpServlet {
                         session.setAttribute("user", user);
                         session.setAttribute("play-sound", "");
                         session.setAttribute("UserDao", userDao);
+                        session.setAttribute("FineDao", fineDao);
                         session.setAttribute("TitleDao", titleDao);
                         session.setAttribute("BookDao", bookDao);
                         session.setAttribute("HoldDao", holdDao);

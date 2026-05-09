@@ -14,6 +14,7 @@ public class SignOutServlet extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("user");
         session.removeAttribute("UserDao");
+        session.removeAttribute("FineDao");
         session.removeAttribute("BookDao");
         session.removeAttribute("TitleDao");
         session.removeAttribute("HoldDao");
