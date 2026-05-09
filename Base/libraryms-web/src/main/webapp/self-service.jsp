@@ -15,7 +15,7 @@ else {
                     Invalid barcode. Please try again.
             <%      break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Missing or empty parameter.
+                    <%= operation.equals("checkout") ? "You must see a library staff member to check this book." : "Missing or empty parameter." %>
             <%      break;
                 case SC_NOT_FOUND:%>
                     <%= operation.equals("hold") ? "Title" : "Copy" %> not found. Please double check the barcode and try again.
