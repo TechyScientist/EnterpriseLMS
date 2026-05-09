@@ -58,9 +58,9 @@
         <% List<Book> books = bookDao.checkedOutBy(user.barcode),
                 ready = bookDao.onHoldFor(user.barcode);
             List<Hold> holds = holdDao.listByPatronBarcode(user.barcode);%>
-        <p style="margin-left: 10px;"><strong>My Patron Barcode</strong>: <%= user.barcode %></p>
-        <p style="margin-left: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
-        <p style="margin-left: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
+        <p style="margin: 0 10px 10px 10px;"><strong>Patron Barcode</strong>: <%= user.barcode %></p>
+        <p style="margin: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
+        <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
         <% if(!books.isEmpty()) { %>
             <table style="margin: 10px;">
                 <tr>
