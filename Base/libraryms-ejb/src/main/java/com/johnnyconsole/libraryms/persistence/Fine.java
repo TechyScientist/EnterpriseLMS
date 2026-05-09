@@ -31,6 +31,10 @@ public class Fine {
         this.note = note;
     }
 
+    public double getAmount() {
+        return amount;
+    }
+
     //TODO: Remove this method -- used only for testing
     @Override
     public String toString() {
