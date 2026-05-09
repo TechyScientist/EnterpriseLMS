@@ -74,6 +74,7 @@
                         <td><%= fine.note.replace("\n", "<br/>") %></td>
                         <td><%= String.format("$%.2f", fine.amount) %></td>
                     </tr>
+                <% } %>
             </table>
         <% } %>
         <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
