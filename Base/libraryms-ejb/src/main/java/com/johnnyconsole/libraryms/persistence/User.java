@@ -14,7 +14,6 @@ public class User {
     @Id
     public String barcode;
     public String username, lastName, firstName;
-    public double balance;
     public boolean libraryStaff, libraryAdmin;
     private String password;
 
@@ -42,7 +41,6 @@ public class User {
                 .append("\n\tlastName: ").append(lastName)
                 .append("\n\tfirstName: ").append(firstName)
                 .append("\n\tusername: ").append(username)
-                .append("\n\tbalance: ").append(String.format("$%.2f", balance))
                 .append("\n}").toString();
     }
 }
