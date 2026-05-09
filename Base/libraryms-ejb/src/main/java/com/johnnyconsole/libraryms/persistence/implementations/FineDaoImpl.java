@@ -39,7 +39,7 @@ public class FineDaoImpl implements FineDao {
     @Override
     public List<Fine> listForPatron(String patronBarcode) {
         try {
-            return (List<Fine) manager.createNamedQuery("Fine.ListForPatron")
+            return (List<Fine>) manager.createNamedQuery("Fine.ListForPatron")
                     .setParameter("patron", patronBarcode)
                     .getResultList();
         } catch (Exception ex) {
