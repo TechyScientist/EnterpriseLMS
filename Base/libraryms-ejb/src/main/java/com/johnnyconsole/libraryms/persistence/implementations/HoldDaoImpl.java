@@ -1,8 +1,11 @@
 package com.johnnyconsole.libraryms.persistence.implementations;
 
+import com.johnnyconsole.libraryms.persistence.Book;
 import com.johnnyconsole.libraryms.persistence.Hold;
+import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
 import com.johnnyconsole.libraryms.persistence.interfaces.HoldDao;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,10 +19,13 @@ public class HoldDaoImpl implements HoldDao {
     @PersistenceContext(unitName="hold")
     private EntityManager manager;
 
+    @EJB
+    private BookDao bookDao;
+
     @Override
     public boolean place(Hold hold) {
         try {
-            if(retreive(hold.patronBarcode, hold.titleBarcode) != null) return false;
+            if(retrieve(hold.patronBarcode, hold.titleBarcode) != null) return false;
             manager.persist(hold);
             return true;
         } catch (Exception ex) {
@@ -38,7 +44,33 @@ public class HoldDaoImpl implements HoldDao {
     }
 
     @Override
-    public Hold retreive(String patronBarcode, String titleBarcode) {
+    public boolean pop(Hold hold) {
+        try {
+            remove(hold);
+            List<Book> holds = bookDao.onHoldFor(hold.patronBarcode);
+            if(holds.isEmpty())  return true;
+            else {
+                for(Book book : holds) {
+                    if (book.titleBarcode.equals(hold.titleBarcode)) {
+                        Hold next = nextForTitleBarcode(hold.titleBarcode);
+                        if(next == null) {
+                            bookDao.checkIn(book);
+                        }
+                        else {
+                            bookDao.hold(book, next.patronBarcode);
+                        }
+                        break;
+                    }
+                }
+                return true;
+            }
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public Hold retrieve(String patronBarcode, String titleBarcode) {
         try {
             return (Hold) manager.createNamedQuery("Hold.RetrieveHold")
                     .setParameter("patron", patronBarcode)

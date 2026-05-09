@@ -12,6 +12,7 @@ import java.time.format.DateTimeFormatter;
         @NamedQuery(name="Book.SearchByTitle", query="SELECT b FROM Book b JOIN Title t ON b.titleBarcode = t.titleBarcode WHERE t.title LIKE :criteria"),
         @NamedQuery(name="Book.SearchByAuthor", query="SELECT b FROM Book b JOIN Title t ON b.titleBarcode = t.titleBarcode WHERE t.author LIKE :criteria"),
         @NamedQuery(name="Book.CheckedOutByPatron", query="SELECT b FROM Book b WHERE b.status='Checked Out' AND b.outTo=:patron"),
+        @NamedQuery(name="Book.OnHoldForPatron", query="SELECT b FROM Book b WHERE b.status='On Hold' AND b.outTo=:patron"),
         @NamedQuery(name="Book.ListAvailable", query="SELECT b FROM Book b WHERE b.status='Available'"),
         @NamedQuery(name="Book.ListCheckedOut", query="SELECT b FROM Book b WHERE b.status='Checked Out'"),
         @NamedQuery(name="Book.ListLost", query="SELECT b FROM Book b WHERE b.status='Lost'")

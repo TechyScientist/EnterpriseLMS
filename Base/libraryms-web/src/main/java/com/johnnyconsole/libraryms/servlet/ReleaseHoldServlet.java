@@ -25,7 +25,7 @@ public class ReleaseHoldServlet extends HttpServlet {
                 String patron = request.getParameter("patron-barcode"),
                         title = request.getParameter("title-barcode");
 
-                if (holdDao.remove(holdDao.retreive(patron, title))) {
+                if (holdDao.pop(holdDao.retrieve(patron, title))) {
                     session.setAttribute("status", SC_ACCEPTED);
                     response.sendRedirect("/library/dashboard.jsp");
                 } else {

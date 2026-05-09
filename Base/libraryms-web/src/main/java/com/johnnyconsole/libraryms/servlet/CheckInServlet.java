@@ -49,15 +49,18 @@ public class CheckInServlet extends HttpServlet {
                                 session.setAttribute("status", SC_CONTINUE);
                                 session.setAttribute("patron", hold.patronBarcode);
                                 session.setAttribute("operation", "checkin");
+                                bookDao.hold(book, hold.patronBarcode);
+                                holdDao.remove(hold);
                             } else if (book.dueDate.before(Date.valueOf(LocalDate.now()))) {
+                                bookDao.checkIn(book);
                                 session.setAttribute("status", SC_PARTIAL_CONTENT);
                                 session.setAttribute("due", book.dueDate);
                                 session.setAttribute("operation", "checkin");
                             } else {
+                                bookDao.checkIn(book);
                                 session.setAttribute("status", SC_ACCEPTED);
                                 session.setAttribute("operation", "checkin");
                             }
-                            bookDao.checkIn(book);
                             response.sendRedirect("/library/staff.jsp");
                         } else {
                             session.setAttribute("status", SC_CONFLICT);

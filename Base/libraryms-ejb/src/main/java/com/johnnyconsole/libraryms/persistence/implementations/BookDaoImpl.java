@@ -40,6 +40,13 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
+    public void hold(Book book, String patronBarcode) {
+        book.status = "On Hold";
+        book.outTo = patronBarcode;
+        manager.merge(book);
+    }
+
+    @Override
     public void renew(Book book) {
         book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
         manager.merge(book);
@@ -102,6 +109,17 @@ public class BookDaoImpl implements BookDao {
                     .setParameter("patron", patronBarcode)
                     .getResultList();
         } catch (Exception ex) {
+            return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public List<Book> onHoldFor(String patronBarcode) {
+        try {
+            return (List<Book>)  manager.createNamedQuery("Book.OnHoldForPatron")
+                    .setParameter("patron", patronBarcode)
+                    .getResultList();
+        }  catch (Exception ex) {
             return Collections.emptyList();
         }
     }
