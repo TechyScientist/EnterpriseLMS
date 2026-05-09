@@ -55,8 +55,9 @@
         <% } %>
 
         <h3>My Library Account</h3>
-        <% List<Book> books = bookDao.checkedOutBy(user.barcode);
-            List<Hold> holds = holdDao.listByPatronBarcode(user.barcode); %>
+        <% List<Book> books = bookDao.checkedOutBy(user.barcode),
+                ready = bookDao.onHoldFor(user.barcode);
+            List<Hold> holds = holdDao.listByPatronBarcode(user.barcode);%>
         <p style="margin-left: 10px;"><strong>My Patron Barcode</strong>: <%= user.barcode %></p>
         <p style="margin-left: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", user.balance) %></p>
         <p style="margin-left: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
@@ -80,7 +81,7 @@
                 <% } %>
             </table>
         <% } %>
-        <p style="margin: 10px;"><strong>Holds</strong>: <%= holds.size() %></p>
+        <p style="margin: 10px;"><strong>Holds Not Yet Available</strong>: <%= holds.size() %></p>
         <% if(!holds.isEmpty()) { %>
             <table style="margin: 10px;">
                 <tr>
@@ -104,8 +105,27 @@
                 <% } %>
             </table>
         <% } %>
+        <p style="margin: 10px;"><strong>Holds Ready for Pickup</strong>: <%= ready.size() %><% if(!ready.isEmpty()) { %> Please see a library staff member to check any of these out. <% } %></p>
+        <% if(!ready.isEmpty()) { %>
+            <table style="margin: 10px;">
+                <tr>
+                    <th>Copy Barcode</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                </tr>
+            <%  for(Book book : ready) {
+                    Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
+                <tr>
+                    <th><%= book.copyBarcode %></th>
+                    <td><%= titleInfo.title %></td>
+                    <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
+                </tr>
+        <%  } %>
+            </table>
+        <% } %>
         <p style="margin: 10px;">Visit the <a href="self-service.jsp">Self Service</a> page to check out materials, renew checked out materials, or place holds.</p>
 <% session.removeAttribute("status");
-session.removeAttribute("play-sound");
-} %>
+session.removeAttribute("play-sound"); %>
+
 <%@ include file="assets/include/footer.jsp" %>
+<% } %>
