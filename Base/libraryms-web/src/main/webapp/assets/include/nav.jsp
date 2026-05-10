@@ -10,8 +10,6 @@
         <a href="<%= projectRoot %>/profile.jsp" <% if(pageName.equals("profile")) { %> id="current" <% } %>>My Profile</a>
         <% if(user.libraryStaff || user.libraryAdmin) { %>
             <a href="<%= projectRoot %>/staff.jsp" <% if(pageName.equals("staff")) { %> id="current" <% } %>>Staff Operations</a>
-        <% } if(user.libraryAdmin) { %>
-            <a href="<%= projectRoot %>/admin.jsp" <% if(pageName.equals("admin")) { %> id="current" <% } %>>Admin Operations</a>
         <% } %>
         <a href="<%= projectRoot %>/SignOutServlet">Sign Out</a>
     <% } %>
