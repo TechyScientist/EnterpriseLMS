@@ -91,7 +91,7 @@
             <h3>Patron Management</h3>
         </div>
         <div>
-            <h3>Book Management</h3>
+            <h3>Collection Management</h3>
         </div>
     </div>
 <%@ include file="assets/include/footer.jsp" %>
