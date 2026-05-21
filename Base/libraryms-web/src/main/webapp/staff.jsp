@@ -118,9 +118,28 @@
         </div>
         <div>
             <h3>Patron Management</h3>
+            <a href="/library/add-patron.jsp">Create a Patron Account</a><br/>
+            <% if(user.libraryAdmin) { %>
+                <a href="/library/edit-patron.jsp">Modify an Existing Patron Account</a><br/>
+                <a href="/library/remove-patron.jsp">Remove a Patron Account</a><br/>
+            <% } %><br/>
+            <a href="/library/issue-fine.jsp">Add a Fine to a Patron Account</a><br/>
+            <% if(user.libraryAdmin) { %>
+                <a href="/library/remove-fine.jsp">Remove a Fine from a Patron Account</a><br/>
+            <% } %>
         </div>
         <div>
             <h3>Collection Management</h3>
+            <a href="/library/add-title.jsp">Create a <strong>Title</strong> Record</a><br/>
+            <% if(user.libraryAdmin) { %>
+                <a href="/library/edit-title.jsp">Modify an Existing <strong>Title</strong> Record</a><br/>
+                <a href="/library/remove-title.jsp">Remove a <strong>Title</strong> Record</a><br/>
+            <% } %><br/>
+            <a href="/library/add-copy.jsp">Create a <strong>Copy</strong> Record</a><br/>
+            <% if(user.libraryAdmin) { %>
+                <a href="/library/edit-copy.jsp">Modify an Existing <strong>Copy</strong> Record</a><br/>
+                <a href="/library/remove-copy.jsp">Remove a <strong>Copy</strong> Record</a><br/>
+            <% } %>
         </div>
     </div>
 <%@ include file="assets/include/footer.jsp" %>
