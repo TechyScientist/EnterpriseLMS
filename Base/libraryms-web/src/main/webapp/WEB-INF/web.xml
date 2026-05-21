@@ -23,4 +23,8 @@
         <servlet-name>CheckOutServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.CheckOutServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>CheckStatusServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.CheckStatusServlet</servlet-class>
+    </servlet>
 </web-app>
