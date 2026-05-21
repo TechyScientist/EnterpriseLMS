@@ -82,7 +82,7 @@
     } %>
     <div style="display: grid; grid-template-columns: auto auto auto; gap: 0 50px; width: max-content;">
         <div>
-            <h3>Quick Action: Check Copy Status</h3>
+            <h3>Check Copy Status</h3>
             <form action="CheckStatusServlet" method="POST">
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
@@ -92,7 +92,7 @@
             </form>
         </div>
         <div>
-            <h3>Quick Action: Check Out a Title</h3>
+            <h3>Check Out a Title</h3>
             <form action="CheckOutServlet" method="POST">
                 <input type="hidden" name="referrer" id="referrer" value="/library/staff.jsp" />
                 <div class="form-field">
@@ -107,7 +107,7 @@
             </form>
         </div>
         <div>
-            <h3>Quick Action: Check In a Title</h3>
+            <h3>Check In a Title</h3>
             <form action="CheckInServlet" method="POST">
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
@@ -128,6 +128,7 @@
 session.removeAttribute("operation");
 session.removeAttribute("patron");
 session.removeAttribute("due");
+session.removeAttribute("due-date");
 session.removeAttribute("copy-status");
 session.removeAttribute("note");
 } %>
