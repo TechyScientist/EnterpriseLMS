@@ -27,4 +27,8 @@
         <servlet-name>CheckStatusServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.CheckStatusServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddPatronServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.AddPatronServlet</servlet-class>
+    </servlet>
 </web-app>
