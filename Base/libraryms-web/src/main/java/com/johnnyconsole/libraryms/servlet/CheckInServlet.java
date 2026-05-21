@@ -38,7 +38,7 @@ public class CheckInServlet extends HttpServlet {
             if(user.libraryStaff || user.libraryAdmin) {
                 if (request.getParameter("checkin-submit") != null) {
                     String barcode = request.getParameter("copy-barcode");
-                    if (barcode.charAt(0) >= '2' && barcode.charAt(0) <= '8' && barcodeBean.isValid(barcode)) {
+                    if (barcodeBean.isValidCopyBarcode(barcode)) {
                         Book book = bookDao.findByCopyCode(barcode);
                         if (book == null) {
                             session.setAttribute("status", SC_NOT_FOUND);

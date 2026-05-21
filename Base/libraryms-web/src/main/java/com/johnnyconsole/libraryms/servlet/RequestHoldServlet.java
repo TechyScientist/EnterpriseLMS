@@ -29,8 +29,7 @@ public class RequestHoldServlet extends HttpServlet {
             if (request.getParameter("hold-submit") != null) {
                 String patron = request.getParameter("patron-barcode"),
                         title = request.getParameter("title-barcode");
-                if (title.startsWith("978") && barcodeBean.isValid(title) &&
-                        patron.startsWith("13870") && barcodeBean.isValid(patron)) {
+                if (barcodeBean.isValidTitleBarcode(title) && barcodeBean.isValidPatronBarcode(patron)) {
                     if (!holdDao.place(new Hold(patron, title))) {
                         session.setAttribute("operation", "hold");
                         session.setAttribute("status", SC_CONFLICT);

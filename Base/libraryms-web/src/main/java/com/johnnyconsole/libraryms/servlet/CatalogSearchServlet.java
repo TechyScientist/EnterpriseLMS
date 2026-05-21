@@ -32,7 +32,7 @@ public class CatalogSearchServlet extends HttpServlet {
             switch (searchBy) {
                 case "copyBarcode": {
                     String barcode = request.getParameter("copyBarcode");
-                    if(barcode.charAt(0) >= '2' && barcode.charAt(0) <= '8' && barcodeBean.isValid(barcode)) {
+                    if(barcodeBean.isValidCopyBarcode(barcode)) {
                         Book book = bookDao.findByCopyCode(barcode);
                         if (book == null) {
                             session.setAttribute("status", SC_NOT_FOUND);
@@ -50,7 +50,7 @@ public class CatalogSearchServlet extends HttpServlet {
                 break;
                 case "titleBarcode": {
                     String barcode = request.getParameter("titleBarcode");
-                    if(barcode.startsWith("978") && barcodeBean.isValid(barcode)) {
+                    if(barcodeBean.isValidTitleBarcode(barcode)) {
                         List<Book> books = bookDao.findByTitleBarcode(barcode);
                         if (books.isEmpty()) {
                             session.setAttribute("status", SC_NOT_FOUND);

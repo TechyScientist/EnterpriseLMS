@@ -33,8 +33,7 @@ public class CheckOutServlet extends HttpServlet {
                 String patron = request.getParameter("patron-barcode"),
                         copy = request.getParameter("copy-barcode"),
                         referrer = request.getParameter("referrer");
-                if (copy.charAt(0) >= '2' && copy.charAt(0) <= '8' && barcodeBean.isValid(copy) &&
-                    patron.startsWith("13870") && barcodeBean.isValid(patron)) {
+                if (barcodeBean.isValidCopyBarcode(copy) && barcodeBean.isValidPatronBarcode(patron)) {
                     Book book = bookDao.findByCopyCode(copy);
                     if (book == null) {
                         session.setAttribute("status", SC_NOT_FOUND);
