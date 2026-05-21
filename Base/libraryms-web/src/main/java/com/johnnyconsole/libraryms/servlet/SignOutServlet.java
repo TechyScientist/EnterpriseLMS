@@ -11,6 +11,7 @@ public class SignOutServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.getSession().invalidate();
+        request.getSession(true).setAttribute("signed-out", true);
         response.sendRedirect("/library/");
     }
 }
