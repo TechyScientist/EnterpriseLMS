@@ -35,6 +35,9 @@
                     case SC_UNAUTHORIZED: %>
                 Invalid credentials, please try again.
                 <%          break;
+                    case SC_FORBIDDEN: %>
+                        You must be a library staff member to do that.
+                <%          break;
                 } %>
             </p>
             <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
