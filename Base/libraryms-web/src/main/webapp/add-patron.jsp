@@ -2,10 +2,12 @@
 <% String pageName = "staff", pageTitle = "Create Patron Account"; %>
 <%@ include file="assets/include/header.jsp" %>
 
+<% //TODO: Handle success and error messages %>
+
 <% if(user != null) {
     if(user.libraryStaff || user.libraryAdmin) { %>
 <h3>Create a Patron Account</h3>
-  <form action="" method="post">
+  <form action="AddPatronServlet" method="post">
       <div style="display: grid; grid-template-columns: min-content min-content; gap: 10px;">
         <div class="form-field" style="margin-bottom: 0;">
             <label for="barcode-type">Barcode Type</label>
