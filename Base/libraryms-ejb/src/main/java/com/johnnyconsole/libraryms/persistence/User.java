@@ -21,12 +21,14 @@ public class User {
 
     }
 
-    public User(String barcode, String username, String password, String lastName, String firstName) {
+    public User(String barcode, String username, String password, String lastName, String firstName, boolean staff, boolean admin) {
         this.barcode = barcode;
         this.username = username;
         this.password = password;
         this.lastName = lastName;
         this.firstName = firstName;
+        this.libraryStaff = staff;
+        this.libraryAdmin = admin;
     }
 
     public String getPassword() {
