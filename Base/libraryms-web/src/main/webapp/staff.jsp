@@ -9,7 +9,7 @@
     session.setAttribute("status", SC_UNAUTHORIZED);
     response.sendRedirect("/library/signin.jsp");
 } else if(!(user.libraryStaff || user.libraryAdmin)) {
-    session.setAttribute("status", SC_UNAUTHORIZED);
+    session.setAttribute("status", SC_FORBIDDEN);
     response.sendRedirect("/library/dashboard.jsp");
 } else {
     int status = session.getAttribute("status") == null ? SC_OK : (int) session.getAttribute("status");
