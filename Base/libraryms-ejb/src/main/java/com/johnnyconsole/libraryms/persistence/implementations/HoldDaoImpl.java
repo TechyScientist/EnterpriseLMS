@@ -26,7 +26,17 @@ public class HoldDaoImpl implements HoldDao {
     public boolean place(Hold hold) {
         try {
             if(retrieve(hold.patronBarcode, hold.titleBarcode) != null) return false;
-            manager.persist(hold);
+            if(listByTitleBarcode(hold.titleBarcode).isEmpty()) {
+                List<Book> books = bookDao.findByTitleBarcode(hold.titleBarcode);
+                for(Book book : books) {
+                    if(book.status.equals("Available")) {
+                        bookDao.hold(book, hold.patronBarcode);
+                        break;
+                    }
+                }
+            } else {
+                manager.persist(hold);
+            }
             return true;
         } catch (Exception ex) {
             return false;
