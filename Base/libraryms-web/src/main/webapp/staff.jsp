@@ -1,6 +1,7 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
 <%@ page import="java.sql.Date" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDate" %>
 <% String pageName = "staff", pageTitle = "Staff Area"; %>
 <%@ include file="assets/include/header.jsp" %>
 
@@ -37,7 +38,35 @@
         if(operation.equals("checkin")) { %>
             <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Check in completed -&nbsp;<strong>On Time</strong></p>
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
-    <%  }
+    <%  } else if(operation.equals("checkout")) { %>
+            <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Check out completed. This book is due <%= session.getAttribute("due-date") %>.</p>
+            <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%         }
+          else if(operation.equals("status-check")) {
+            if(session.getAttribute("note") != null) { %>
+                <p id="note"><img src="assets/img/note.png" alt="Note"><strong>Note</strong>: <%= session.getAttribute("note") %> 
+                    <strong>Copy Status</strong>: <%= session.getAttribute("copy-status") %><% if(session.getAttribute("copy-status").equals("Checked Out")) { %>, Due: <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } else if(session.getAttribute("copy-status").equals("On Hold")) { %> Next Hold: <%= session.getAttribute("hold-patron") %> <% } %></p>
+                <audio src="assets/sound/chime.mp3" style="display: none;" autoplay></audio>
+         <% } else if(((String)session.getAttribute("copy-status")).startsWith("On Hold")) { %>
+                <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: On Hold. <% if(((String)session.getAttribute("copy-status")).endsWith("Checked Out")) { %> Currently due <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %>&nbsp;Next patron: <strong><%= session.getAttribute("hold-patron") %></strong></p>
+                <audio src="assets/sound/twinkle.mp3" style="display: none;" autoplay></audio>
+<%          } else if(session.getAttribute("copy-status").equals("Checked Out")) {
+                Date dueDate = (Date)session.getAttribute("due");
+                if(dueDate.before(Date.valueOf(LocalDate.now()))) { %>
+                    <p id="error"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Overdue,  due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></p>
+                    <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
+<%              } else { %>
+                    <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Checked Out, due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></p>
+                    <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%              }
+            } else if(session.getAttribute("copy-status").equals("Lost")) { %>
+                <p id="error"><img src="assets/img/cross.png" alt="Flag"><strong>Copy Status</strong>: Lost</p>
+                <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
+<%          } else { %>
+                <p id="success"><img src="assets/img/check.png" alt="Flag"><strong>Copy Status</strong>: Available</p>
+                <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%          }
+        }
     }
     else if(status == SC_CONTINUE) {
         if(operation.equals("checkin")) { %>
@@ -54,7 +83,7 @@
     <div style="display: grid; grid-template-columns: auto auto auto; gap: 0 50px; width: max-content;">
         <div>
             <h3>Quick Action: Check Copy Status</h3>
-            <form action="" method="POST">
+            <form action="CheckStatusServlet" method="POST">
                 <div class="form-field">
                     <label for="copy-barcode">Copy Barcode</label>
                     <input type="text" id="copy-barcode" name="copy-barcode" required/>
@@ -99,4 +128,6 @@
 session.removeAttribute("operation");
 session.removeAttribute("patron");
 session.removeAttribute("due");
+session.removeAttribute("copy-status");
+session.removeAttribute("note");
 } %>
