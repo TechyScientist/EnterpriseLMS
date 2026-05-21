@@ -13,6 +13,36 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext(unitName="user") private EntityManager manager;
 
     @Override
+    public boolean create(User user) {
+        try {
+            manager.persist(user);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(User user) {
+        try {
+            manager.merge(user);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(User user) {
+        try {
+            manager.remove(manager.contains(user) ? user : manager.merge(user));
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
     public User findByBarcode(String barcode) {
         try {
            return (User) manager.createNamedQuery("User.FindByBarcode")
