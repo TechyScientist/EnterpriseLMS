@@ -15,8 +15,7 @@ public class BarcodeBeanImpl implements BarcodeBean {
     @EJB
     private BookDao bookDao;
 
-    @Override
-    public boolean isValid(String barcode) {
+    private boolean isValid(String barcode) {
         if(barcode == null || barcode.length() != 13 || !barcode.matches("\\d{13}")) return false;
         int check = barcode.charAt(barcode.length() - 1) - '0', sum = 0;
 
@@ -26,6 +25,21 @@ public class BarcodeBeanImpl implements BarcodeBean {
 
         sum = sum % 10 == 0 ? 0 : 10 - sum % 10;
         return sum == check;
+    }
+
+    @Override
+    public boolean isValidCopyBarcode(String barcode) {
+        return isValid(barcode) && !(barcode.startsWith("13870") || barcode.startsWith("978"));
+    }
+
+    @Override
+    public boolean isValidTitleBarcode(String barcode) {
+        return isValid(barcode) && barcode.startsWith("978");
+    }
+
+    @Override
+    public boolean isValidPatronBarcode(String barcode) {
+        return isValid(barcode) && barcode.startsWith("13870");
     }
 
     @Override

@@ -4,7 +4,9 @@ import javax.ejb.Local;
 
 @Local
 public interface BarcodeBean {
-    boolean isValid(String barcode);
+    boolean isValidCopyBarcode(String barcode);
+    boolean isValidTitleBarcode(String barcode);
+    boolean isValidPatronBarcode(String barcode);
     String generatePatronBarcode();
     String generateCopyBarcode();
 }
