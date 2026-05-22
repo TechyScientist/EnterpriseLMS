@@ -61,7 +61,7 @@
                     <td><%= String.format("$%.2f", fine.amount) %></td>
                     <td><%= fine.note %></td>
                     <td>
-                        <form action="" method="post" style="margin: 0;">
+                        <form action="DeleteFineServlet" method="post" style="margin: 0;">
                             <input type="hidden" name="patron" id="patron" value="<%= fine.patron %>"/>
                             <input type="hidden" name="timestamp" id="timestamp" value="<%= fine.added %>"/>
                             <button type="submit" name="remove-fine-submit" id="remove-fine-submit">Delete<img src="assets/img/proceed.png" alt="Proceed"/></button>
