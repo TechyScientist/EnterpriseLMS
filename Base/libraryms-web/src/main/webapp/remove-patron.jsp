@@ -9,13 +9,16 @@
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
 <%          switch(status) {
                 case SC_CONFLICT: %>
-                    Passwords do not match. Please try again.
+                    Invalid barcode. Please try again.
 <%                  break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Invalid barcode, or Username or barcode already exists. Please try again.
+                    Unable to delete patron profile - patron has checked out books.
 <%                  break;
                 case SC_BAD_REQUEST: %>
-                    That action must be done with the add patron form.
+                    That action must be done with the delete patron form.
+<%                  break;
+                case SC_NOT_FOUND: %>
+                    Patron not found. Please try again.
 <%                  break;
             } %>
             </p>
@@ -25,7 +28,7 @@
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%      } %>
 <h3>Delete a Patron Profile</h3>
-  <form action="" method="post">
+  <form action="RemovePatronServlet" method="post">
         <div class="form-field">
             <label for="barcode">Patron Barcode</label>
             <input type="text" name="barcode" id="barcode" required/>
