@@ -31,4 +31,8 @@
         <servlet-name>AddPatronServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.AddPatronServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemovePatronServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.RemovePatronServlet</servlet-class>
+    </servlet>
 </web-app>
