@@ -43,7 +43,7 @@ label {
     margin-right: 10px;
 }
 
-input:not([type="submit"]), select {
+input:not([type="submit"]), select, textarea {
     min-width: 300px;
     padding: 10px;
     background: var(--color-background);
@@ -53,8 +53,24 @@ input:not([type="submit"]), select {
     box-shadow: none;
 }
 
-input:not([type="submit"]):focus, select:focus {
+input:not([type="submit"]):focus, select:focus, textarea:focus {
     border-color: var(--color-primary);
+}
+
+textarea {
+    height: 100px;
+    resize: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
 }
 
 button {
