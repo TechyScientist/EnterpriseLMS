@@ -39,4 +39,8 @@
         <servlet-name>AssessFineServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.AssessFineServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetPatronFineListServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.GetPatronFineListServlet</servlet-class>
+    </servlet>
 </web-app>
