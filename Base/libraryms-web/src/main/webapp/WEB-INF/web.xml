@@ -35,4 +35,8 @@
         <servlet-name>RemovePatronServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.RemovePatronServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AssessFineServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.AssessFineServlet</servlet-class>
+    </servlet>
 </web-app>
