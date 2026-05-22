@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 @Table(name="libraryms_fines")
 @IdClass(FineId.class)
 @NamedQueries({
-        @NamedQuery(name="Fine.ListForPatron", query="SELECT f FROM Fine f WHERE f.patron=:patron")
+        @NamedQuery(name="Fine.ListForPatron", query="SELECT f FROM Fine f WHERE f.patron=:patron ORDER BY f.added")
 })
 public class Fine {
 
