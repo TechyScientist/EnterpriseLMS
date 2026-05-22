@@ -6,6 +6,7 @@ import com.johnnyconsole.libraryms.persistence.interfaces.FineDao;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
 
@@ -44,6 +45,18 @@ public class FineDaoImpl implements FineDao {
                     .getResultList();
         } catch (Exception ex) {
             return Collections.emptyList();
+        }
+    }
+
+    @Override
+    public Fine search(String patronBarcode, Timestamp timestamp) {
+        try {
+            return (Fine) manager.createNamedQuery("Fine.Find")
+                    .setParameter("patron", patronBarcode)
+                    .setParameter("added", timestamp)
+                    .getSingleResult();
+        } catch (Exception ex) {
+            return null;
         }
     }
 }
