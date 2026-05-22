@@ -1,12 +1,30 @@
 <%@ page import="static javax.servlet.http.HttpServletResponse.*" %>
-<% String pageName = "staff", pageTitle = "Create Patron Account"; %>
+<% String pageName = "staff", pageTitle = "Create Patron Profile"; %>
 <%@ include file="assets/include/header.jsp" %>
 
-<% //TODO: Handle success and error messages %>
-
 <% if(user != null) {
-    if(user.libraryStaff || user.libraryAdmin) { %>
-<h3>Create a Patron Account</h3>
+    if(user.libraryStaff || user.libraryAdmin) {
+        int status = session.getAttribute("status") == null ? SC_OK : (int) session.getAttribute("status");
+        if(status != SC_OK && status != SC_CREATED) { %>
+            <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
+<%          switch(status) {
+                case SC_CONFLICT: %>
+                    Passwords do not match. Please try again.
+<%                  break;
+                case SC_NOT_ACCEPTABLE: %>
+                    Username already exists. Please try again.
+<%                  break;
+                case SC_BAD_REQUEST: %>
+                    That action must be done with the add patron form.
+<%                  break;
+            } %>
+            </p>
+            <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
+<%      } else if(status == SC_CREATED) { %>
+            <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Patron profile created successfully.</p>
+            <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%      } %>
+<h3>Create a Patron Profile</h3>
   <form action="AddPatronServlet" method="post">
       <div style="display: grid; grid-template-columns: min-content min-content; gap: 10px;">
         <div class="form-field" style="margin-bottom: 0;">
@@ -61,7 +79,7 @@
               </select>
           </div>
       </div>
-      <button type="submit" id="add-patron-submit" name="add-patron-submit">Create Patron Account<img src="assets/img/proceed.png" alt="Proceed"/></button>
+      <button type="submit" id="add-patron-submit" name="add-patron-submit">Create Patron Profile<img src="assets/img/proceed.png" alt="Proceed"/></button>
   </form>
 
 <script>
@@ -82,13 +100,13 @@
         });
     });
 </script>
-<%   } else {
-    session.setAttribute("status", SC_FORBIDDEN);
-    response.sendRedirect("/library/dashboard.jsp");
+<% } else {
+        session.setAttribute("status", SC_FORBIDDEN);
+        response.sendRedirect("/library/dashboard.jsp");
     }
-} else {
+    session.removeAttribute("status"); %>
+    <%@ include file="assets/include/footer.jsp" %>
+<% } else {
     session.setAttribute("status", SC_UNAUTHORIZED);
     response.sendRedirect("/library/signin.jsp");
 } %>
-
-<%@ include file="assets/include/footer.jsp" %>
