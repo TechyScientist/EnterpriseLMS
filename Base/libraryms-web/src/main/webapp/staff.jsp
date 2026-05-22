@@ -118,10 +118,10 @@
         </div>
         <div>
             <h3>Patron Management</h3>
-            <a href="/library/add-patron.jsp">Create a Patron Account</a><br/>
+            <a href="/library/add-patron.jsp">Create a Patron Profile</a><br/>
             <% if(user.libraryAdmin) { %>
-                <a href="/library/edit-patron.jsp">Modify an Existing Patron Account</a><br/>
-                <a href="/library/remove-patron.jsp">Remove a Patron Account</a><br/>
+                <a href="/library/edit-patron.jsp">Modify an Existing Patron Profile</a><br/>
+                <a href="/library/remove-patron.jsp">Remove a Patron Profile</a><br/>
             <% } %><br/>
             <a href="/library/issue-fine.jsp">Add a Fine to a Patron Account</a><br/>
             <% if(user.libraryAdmin) { %>
