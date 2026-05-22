@@ -124,9 +124,7 @@
                 <a href="/library/remove-patron.jsp">Remove a Patron Profile</a><br/>
             <% } %><br/>
             <a href="/library/issue-fine.jsp">Add a Fine to a Patron Account</a><br/>
-            <% if(user.libraryAdmin) { %>
-                <a href="/library/remove-fine.jsp">Remove a Fine from a Patron Account</a><br/>
-            <% } %>
+            <a href="/library/remove-fine.jsp">Remove a Fine from a Patron Account</a><br/>
         </div>
         <div>
             <h3>Collection Management</h3>
