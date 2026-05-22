@@ -26,18 +26,18 @@
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
                 <% switch(status) {
                     case SC_BAD_REQUEST: %>
-                That action must be done by the sign in form.
-                <%          break;
+                        That action must be done by the sign in form.
+                <%      break;
                     case SC_NOT_ACCEPTABLE: %>
-                Missing or empty parameter.
-                <%          break;
+                        Missing or empty parameter.
+                <%      break;
                     case SC_NOT_FOUND:
                     case SC_UNAUTHORIZED: %>
-                Invalid credentials, please try again.
-                <%          break;
+                        Invalid credentials, please try again.
+                <%      break;
                     case SC_FORBIDDEN: %>
-                        You must be a library staff member to do that.
-                <%          break;
+                        You do not have sufficient privileges to do that.
+                <%      break;
                 } %>
             </p>
             <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
