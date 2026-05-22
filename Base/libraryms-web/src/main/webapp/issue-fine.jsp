@@ -24,15 +24,15 @@
             <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Fine Assessed successfully.</p>
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%      } %>
-<h3>Delete a Patron Profile</h3>
-  <form action="" method="post">
+<h3>Assess a Fine</h3>
+  <form action="AssessFineServlet" method="post">
       <div class="form-field">
           <label for="barcode">Patron Barcode</label>
           <input type="text" name="barcode" id="barcode" required/>
       </div>
       <div class="form-field">
           <label for="amount">Fine Amount</label>
-          <input type="number" name="amount" id="amount" required/>
+          <input type="number" name="amount" id="amount" min="0.01" step="0.01" required/>
       </div>
       <div class="form-field">
           <label for="note">Note</label>
