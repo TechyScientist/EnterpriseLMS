@@ -24,9 +24,8 @@ public class Fine {
 
     }
 
-    public Fine(String patron, Timestamp added, double amount, String note) {
+    public Fine(String patron, double amount, String note) {
         this.patron = patron;
-        this.added = added;
         this.amount = amount;
         this.note = note;
     }
