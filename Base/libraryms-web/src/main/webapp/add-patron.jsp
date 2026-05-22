@@ -12,7 +12,7 @@
                     Passwords do not match. Please try again.
 <%                  break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Username already exists. Please try again.
+                    Invalid barcode, or Username or barcode already exists. Please try again.
 <%                  break;
                 case SC_BAD_REQUEST: %>
                     That action must be done with the add patron form.
@@ -30,8 +30,8 @@
         <div class="form-field" style="margin-bottom: 0;">
             <label for="barcode-type">Barcode Type</label>
             <select id="barcode-type" name="barcode-type">
-                <option selected>Generate New Barcode</option>
-                <option>Specify Barcode</option>
+                <option selected>Generated</option>
+                <option>Specified</option>
             </select>
         </div>
         <div class="form-field" id="barcode-div" style="display: none; margin-bottom: 0;">

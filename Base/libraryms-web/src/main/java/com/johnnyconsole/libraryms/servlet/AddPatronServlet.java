@@ -40,7 +40,8 @@ public class AddPatronServlet extends HttpServlet {
                     boolean staff = Integer.parseInt(request.getParameter("staff")) == 1,
                             admin = Integer.parseInt(request.getParameter("admin")) == 1;
 
-                    if(userDao.findByUsername(username) == null) {
+                    if(userDao.findByUsername(username) == null && barcodeBean.isValidPatronBarcode(barcode) &&
+                        userDao.findByBarcode(barcode) == null) {
                         if(password.equals(confirmPassword)) {
                             userDao.create(new User(barcode, username,
                                     BCrypt.with(BCrypt.Version.VERSION_2A).hashToString(12, password.toCharArray()),
