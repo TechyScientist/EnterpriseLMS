@@ -3,7 +3,7 @@
 <%@ include file="assets/include/header.jsp" %>
 
 <% if(user != null) {
-    if(user.libraryStaff || user.libraryAdmin) {
+    if(user.libraryAdmin) {
         int status = session.getAttribute("status") == null ? SC_OK : (int) session.getAttribute("status");
         if(status != SC_OK && status != SC_ACCEPTED) { %>
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
