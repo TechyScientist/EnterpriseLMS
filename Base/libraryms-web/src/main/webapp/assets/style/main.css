@@ -76,6 +76,7 @@ input[type=number] {
 button {
     display: flex;
     width: 100%;
+    max-width: 300px;
     align-items: center;
     justify-content: center;
     background: var(--color-primary);
