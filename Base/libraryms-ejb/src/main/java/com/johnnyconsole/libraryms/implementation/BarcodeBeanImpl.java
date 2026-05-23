@@ -29,12 +29,12 @@ public class BarcodeBeanImpl implements BarcodeBean {
 
     @Override
     public boolean isValidCopyBarcode(String barcode) {
-        return isValid(barcode) && !(barcode.startsWith("13870") || barcode.startsWith("978"));
+        return isValid(barcode) && !(barcode.startsWith("13870") || barcode.startsWith("978") || barcode.startsWith("979"));
     }
 
     @Override
     public boolean isValidTitleBarcode(String barcode) {
-        return isValid(barcode) && barcode.startsWith("978");
+        return isValid(barcode) && (barcode.startsWith("978") || barcode.startsWith("979"));
     }
 
     @Override
