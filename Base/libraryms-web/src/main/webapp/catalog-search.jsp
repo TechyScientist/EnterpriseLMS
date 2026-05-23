@@ -6,8 +6,9 @@
 <%@ page import="com.johnnyconsole.libraryms.persistence.Title" %>
 <% String pageName = "catalog-search", pageTitle = "Catalog Search"; %>
 <%@ include file="assets/include/header.jsp" %>
-<% int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
-   String criteria = session.getAttribute("criteria") == null ? "copyBarcode" : (String) session.getAttribute("criteria");
+<% if (user != null) {
+    int status = session.getAttribute("status") == null ? SC_OK : (int) session.getAttribute("status");
+    String criteria = session.getAttribute("criteria") == null ? "copyBarcode" : (String) session.getAttribute("criteria");
     if(status != SC_OK && status != SC_ACCEPTED) { %>
         <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
             <% switch(status) {
@@ -47,43 +48,43 @@
             </div>
             <button type="submit" id="search-submit" name="search-submit">Search <img src="assets/img/proceed.png" alt="Search"/></button>
         </form>
-<% if(status == SC_ACCEPTED) { %>
-    <h3>Search Result</h3>
-    <% if(session.getAttribute("book") != null) {
-        Book book = (Book) session.getAttribute("book");
-        TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
-        Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
-        <table>
-            <tr>
-                <th>Copy Barcode</th>
-                <th>Title Barcode</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Status</th>
-            </tr>
-            <tr>
-                <th><%= book.copyBarcode %></th>
-                <th><%= book.titleBarcode %></th>
-                <td><%= titleInfo.title %></td>
-                <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
-                <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
-            </tr>
-        </table>
-<% }
-    else if(session.getAttribute("booklist") != null) {
-        List<Book> booklist = (List<Book>) session.getAttribute("booklist");
-        TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
-        Title titleInfo = titleDao.findByBarcode(booklist.get(0).titleBarcode); %>
-        <p><strong><%= booklist.size() %></strong> copies found.</p>
-        <table>
-            <tr>
-                <th>Copy Barcode</th>
-                <th>Title Barcode</th>
-                <th>Title</th>
-                <th>Author</th>
-                <th>Status</th>
-            </tr>
-            <% for(Book book : booklist) { %>
+    <% if(status == SC_ACCEPTED) { %>
+        <h3>Search Result</h3>
+        <% if(session.getAttribute("book") != null) {
+            Book book = (Book) session.getAttribute("book");
+            TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
+            Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
+            <table>
+                <tr>
+                    <th>Copy Barcode</th>
+                    <th>Title Barcode</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                </tr>
+                <tr>
+                    <th><%= book.copyBarcode %></th>
+                    <th><%= book.titleBarcode %></th>
+                    <td><%= titleInfo.title %></td>
+                    <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
+                    <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                </tr>
+            </table>
+    <% }
+        else if(session.getAttribute("booklist") != null) {
+            List<Book> booklist = (List<Book>) session.getAttribute("booklist");
+            TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");%>
+            <p><strong><%= booklist.size() %></strong> copies found.</p>
+            <table>
+                <tr>
+                    <th>Copy Barcode</th>
+                    <th>Title Barcode</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Status</th>
+                </tr>
+                <% for(Book book : booklist) {
+                    Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                     <tr>
                         <th><%= book.copyBarcode %></th>
                         <th><%= book.titleBarcode %></th>
@@ -91,51 +92,55 @@
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
                     </tr>
-            <% } %>
-        </table>
-<%
-    } %>
-    <audio src="assets/sound/ding.mp3" style="display:none;" autoplay></audio>
-<% } %>
-<script>
-    const searchBy = document.getElementById("searchBy");
-    const copyBarcodeSearch = document.getElementById("copyBarcodeSearch");
-    const titleBarcodeSearch = document.getElementById("titleBarcodeSearch");
-    const criteriaSearch = document.getElementById("criteriaSearch");
-    const inputCopyCode = document.getElementById("copyBarcode");
-    const inputTitleCode = document.getElementById("titleBarcode");
-    const inputCriteria = document.getElementById("criteria");
+                <% } %>
+            </table>
+    <%
+        } %>
+        <audio src="assets/sound/ding.mp3" style="display:none;" autoplay></audio>
+    <% } %>
+    <script>
+        const searchBy = document.getElementById("searchBy");
+        const copyBarcodeSearch = document.getElementById("copyBarcodeSearch");
+        const titleBarcodeSearch = document.getElementById("titleBarcodeSearch");
+        const criteriaSearch = document.getElementById("criteriaSearch");
+        const inputCopyCode = document.getElementById("copyBarcode");
+        const inputTitleCode = document.getElementById("titleBarcode");
+        const inputCriteria = document.getElementById("criteria");
 
-    searchBy.addEventListener("change", event => {
-        switch (event.target.selectedIndex) {
-            case 0:
-                copyBarcodeSearch.style.display = "block"
-                inputCopyCode.required = true;
-                titleBarcodeSearch.style.display = "none";
-                inputTitleCode.required = false;
-                criteriaSearch.style.display = "none";
-                inputCriteria.required = false;
-                break;
-            case 1:
-                copyBarcodeSearch.style.display = "none"
-                inputCopyCode.required = false;
-                titleBarcodeSearch.style.display = "block";
-                inputTitleCode.required = true;
-                criteriaSearch.style.display = "none";
-                inputCriteria.required = false;
-                break;
-            default:
-                copyBarcodeSearch.style.display = "none"
-                inputCopyCode.required = false;
-                titleBarcodeSearch.style.display = "none";
-                inputTitleCode.required = false
-                criteriaSearch.style.display = "block";
-                inputCriteria.required = true;
-        }
-    });
-</script>
-<% session.removeAttribute("status");
-session.removeAttribute("criteria");
-session.removeAttribute("book");
-session.removeAttribute("booklist"); %>
-<%@ include file="assets/include/footer.jsp" %>
+        searchBy.addEventListener("change", event => {
+            switch (event.target.selectedIndex) {
+                case 0:
+                    copyBarcodeSearch.style.display = "block"
+                    inputCopyCode.required = true;
+                    titleBarcodeSearch.style.display = "none";
+                    inputTitleCode.required = false;
+                    criteriaSearch.style.display = "none";
+                    inputCriteria.required = false;
+                    break;
+                case 1:
+                    copyBarcodeSearch.style.display = "none"
+                    inputCopyCode.required = false;
+                    titleBarcodeSearch.style.display = "block";
+                    inputTitleCode.required = true;
+                    criteriaSearch.style.display = "none";
+                    inputCriteria.required = false;
+                    break;
+                default:
+                    copyBarcodeSearch.style.display = "none"
+                    inputCopyCode.required = false;
+                    titleBarcodeSearch.style.display = "none";
+                    inputTitleCode.required = false
+                    criteriaSearch.style.display = "block";
+                    inputCriteria.required = true;
+            }
+        });
+    </script>
+    <% session.removeAttribute("status");
+    session.removeAttribute("criteria");
+    session.removeAttribute("book");
+    session.removeAttribute("booklist"); %>
+    <%@ include file="assets/include/footer.jsp" %>
+<% } else {
+    session.setAttribute("status", SC_UNAUTHORIZED);
+    response.sendRedirect("/library/signin.jsp");
+} %>
