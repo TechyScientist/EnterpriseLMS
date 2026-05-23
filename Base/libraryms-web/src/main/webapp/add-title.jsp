@@ -12,7 +12,7 @@
                     Title record already exists. Perhaps you meant to <a href="/library/add-copy.jsp">Add a Title</a> instead.
 <%                  break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Invalid barcode. Please try again.
+                    Invalid title or copy barcode. Please try again.
 <%                  break;
                 case SC_BAD_REQUEST: %>
                     That action must be done with the add title form.
@@ -25,7 +25,7 @@
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%      } %>
 <h3>Create a Title Record</h3>
-  <form action="" method="post">
+  <form action="AddTitleServlet" method="post">
     <div class="form-field" style="margin-bottom: 0;">
         <label for="barcode">Barcode</label>
         <input type="text" name="barcode" id="barcode" required/>
@@ -55,7 +55,7 @@
           </div>
           <div class="form-field" id="barcode-div" style="display: none; margin-top: 0;">
               <label for="copy-barcode">Copy Barcode</label>
-              <input type="text" name="copy-barcode" id="copy-barcode" required/>
+              <input type="text" name="copy-barcode" id="copy-barcode"/>
           </div>
       </div>
       <button type="submit" id="add-title-submit" name="add-title-submit">Add Title Record<img src="assets/img/proceed.png" alt="Proceed"/></button>
