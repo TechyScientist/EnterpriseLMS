@@ -8,6 +8,9 @@
         if(status != SC_OK && status != SC_CREATED) { %>
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
 <%          switch(status) {
+                case SC_NOT_FOUND: %>
+                    Title Not Found.
+<%                  break;
                 case SC_CONFLICT: %>
                     Copy already exists. Please try again.
 <%                  break;
@@ -25,7 +28,7 @@
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%      } %>
 <h3>Create a Copy Record</h3>
-  <form action="" method="post">
+  <form action="AddCopyServlet" method="post">
       <div class="form-field">
           <label for="title-barcode">Title Barcode</label>
           <input type="text" name="title-barcode" id="title-barcode" required/>
