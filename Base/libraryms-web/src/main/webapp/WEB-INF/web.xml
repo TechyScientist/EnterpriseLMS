@@ -47,4 +47,8 @@
         <servlet-name>DeleteFineServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.DeleteFineServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddTitleServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.AddTitleServlet</servlet-class>
+    </servlet>
 </web-app>
