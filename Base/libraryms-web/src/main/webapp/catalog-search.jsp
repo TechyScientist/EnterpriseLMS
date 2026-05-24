@@ -67,7 +67,7 @@
                     <th><%= book.titleBarcode %></th>
                     <td><%= titleInfo.title %></td>
                     <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
-                    <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                    <td><%= book.status %><% if(book.status.equals("Checked Out") && (user.libraryStaff || user.libraryAdmin)) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } %></td>
                 </tr>
             </table>
     <% }
@@ -90,7 +90,7 @@
                         <th><%= book.titleBarcode %></th>
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
-                        <td><%= book.status %><% if(book.status.equals("Checked Out")) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %></td>
+                        <td><%= book.status %><% if(book.status.equals("Checked Out") && (user.libraryStaff || user.libraryAdmin)) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } %></td>
                     </tr>
                 <% } %>
             </table>
