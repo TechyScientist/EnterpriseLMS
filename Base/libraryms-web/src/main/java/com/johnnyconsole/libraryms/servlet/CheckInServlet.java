@@ -43,7 +43,7 @@ public class CheckInServlet extends HttpServlet {
                         if (book == null) {
                             session.setAttribute("status", SC_NOT_FOUND);
                             response.sendRedirect("/library/staff.jsp");
-                        } else if (!book.status.equals("Available")) {
+                        } else if (!book.status.equals("Available")) { //TODO: Add check for if a book is waiting on hold
                             Hold hold = holdDao.nextForTitleBarcode(book.titleBarcode);
                             if (hold != null) {
                                 session.setAttribute("status", SC_CONTINUE);
