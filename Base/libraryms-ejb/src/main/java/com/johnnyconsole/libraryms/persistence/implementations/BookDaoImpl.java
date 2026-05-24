@@ -19,43 +19,83 @@ public class BookDaoImpl implements BookDao {
     private EntityManager manager;
 
     @Override
-    public void create(Book book) {
-        manager.persist(book);
+    public boolean create(Book book) {
+        try {
+            manager.persist(book);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
-    public void checkIn(Book book) {
-        book.status = "Available";
-        book.outTo = null;
-        book.dueDate = null;
-        manager.merge(book);
+    public boolean delete(Book book) {
+        try {
+            manager.remove(manager.contains(book) ? book : manager.merge(book));
+            return true;
+        }  catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
-    public void checkOut(Book book, String patronBarcode) {
-        book.status = "Checked Out";
-        book.outTo = patronBarcode;
-        book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
-        manager.merge(book);
+    public boolean checkIn(Book book) {
+        try {
+            book.status = "Available";
+            book.outTo = null;
+            book.dueDate = null;
+            manager.merge(book);
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
     }
 
     @Override
-    public void hold(Book book, String patronBarcode) {
-        book.status = "On Hold";
-        book.outTo = patronBarcode;
-        manager.merge(book);
+    public boolean checkOut(Book book, String patronBarcode) {
+        try {
+            book.status = "Checked Out";
+            book.outTo = patronBarcode;
+            book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+            manager.merge(book);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
     }
 
     @Override
-    public void renew(Book book) {
-        book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
-        manager.merge(book);
+    public boolean hold(Book book, String patronBarcode) {
+        try {
+            book.status = "On Hold";
+            book.outTo = patronBarcode;
+            manager.merge(book);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
     }
 
     @Override
-    public void markLost(Book book) {
-        book.status = "Lost";
-        manager.merge(book);
+    public boolean renew(Book book) {
+        try {
+            book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+            manager.merge(book);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean markLost(Book book) {
+        try {
+            book.status = "Lost";
+            manager.merge(book);
+            return true;
+        } catch(Exception ex) {
+            return false;
+        }
     }
 
     @Override

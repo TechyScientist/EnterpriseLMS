@@ -8,12 +8,13 @@ import java.util.List;
 
 @Local
 public interface BookDao {
-    void create(Book book);
-    void checkIn(Book book);
-    void checkOut(Book book, String patronBarcode);
-    void hold(Book book, String patronBarcode);
-    void renew(Book book);
-    void markLost(Book book);
+    boolean create(Book book);
+    boolean delete(Book book);
+    boolean checkIn(Book book);
+    boolean checkOut(Book book, String patronBarcode);
+    boolean hold(Book book, String patronBarcode);
+    boolean renew(Book book);
+    boolean markLost(Book book);
     Book findByCopyCode(String barcode);
     List<Book> findByTitleBarcode(String username);
     List<Book> findByTitle(String title);
