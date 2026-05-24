@@ -63,4 +63,8 @@
         <servlet-name>RemoveCopyServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.RemoveCopyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReleaseReadyHoldServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.ReleaseReadyHoldServlet</servlet-class>
+    </servlet>
 </web-app>

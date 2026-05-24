@@ -132,6 +132,7 @@
                     <th>Copy Barcode</th>
                     <th>Title</th>
                     <th>Author</th>
+                    <th>Release</th>
                 </tr>
             <%  for(Book book : ready) {
                     Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
@@ -139,6 +140,13 @@
                     <th><%= book.copyBarcode %></th>
                     <td><%= titleInfo.title %></td>
                     <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
+                    <td>
+                        <form action="ReleaseReadyHoldServlet" method="post" style="margin: unset;">
+                            <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
+                            <input type="hidden" name="copy-barcode" id="copy-barcode" value="<%= book.copyBarcode %>"/>
+                            <button type="submit" name="release-submit">Release <img src="assets/img/proceed.png" alt=""/></button>
+                        </form>
+                    </td>
                 </tr>
         <%  } %>
             </table>
