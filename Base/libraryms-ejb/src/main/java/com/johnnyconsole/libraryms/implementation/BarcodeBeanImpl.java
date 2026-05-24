@@ -59,7 +59,7 @@ public class BarcodeBeanImpl implements BarcodeBean {
     public String generateCopyBarcode() {
         StringBuilder barcode;
         do {
-            barcode = new StringBuilder(2 + (int) (Math.random() * 7));
+            barcode = new StringBuilder(String.valueOf(2 + (int) (Math.random() * 7)));
             while (barcode.length() < 12) {
                 barcode.append((int) (Math.random() * 10));
             }
