@@ -28,11 +28,16 @@ public class HoldDaoImpl implements HoldDao {
             if(retrieve(hold.patronBarcode, hold.titleBarcode) != null) return false;
             if(listByTitleBarcode(hold.titleBarcode).isEmpty()) {
                 List<Book> books = bookDao.findByTitleBarcode(hold.titleBarcode);
+                boolean available = false;
                 for(Book book : books) {
                     if(book.status.equals("Available")) {
+                        available = true;
                         bookDao.hold(book, hold.patronBarcode);
                         break;
                     }
+                }
+                if(!available) {
+                    manager.persist(hold);
                 }
             } else {
                 manager.persist(hold);
