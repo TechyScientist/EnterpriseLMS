@@ -73,7 +73,7 @@
                 </tr>
                 <% for(Fine fine : fines) { %>
                     <tr>
-                        <td><%= fine.added.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy h:mm:ss a")) %></td>
+                        <td><%= fine.added.toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMMM yyyy h:mm:ss a")) %></td>
                         <td><%= fine.note.replace("\n", "<br/>") %></td>
                         <td><%= String.format("$%.2f", fine.amount) %></td>
                     </tr>
@@ -96,7 +96,7 @@
                         <th><%= book.copyBarcode %></th>
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
-                        <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></td>
+                        <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %></td>
                     </tr>
                 <% } %>
             </table>
@@ -113,7 +113,7 @@
                 <% for(Hold hold : holds) { %>
                     <tr>
                         <td><strong><%= hold.titleBarcode %></strong> (<%= titleDao.findByBarcode(hold.titleBarcode).title %>)</td>
-                        <td><%= hold.placed.toLocalDateTime().format(DateTimeFormatter.ofPattern("dd MMMM yyyy h:mm:ss a")) %></td>
+                        <td><%= hold.placed.toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMMM yyyy h:mm:ss a")) %></td>
                         <td>
                             <form action="ReleaseHoldServlet" method="post" style="margin: unset;">
                                 <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>

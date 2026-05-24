@@ -45,18 +45,18 @@
           else if(operation.equals("status-check")) {
             if(session.getAttribute("note") != null) { %>
                 <p id="note"><img src="assets/img/note.png" alt="Note"><strong>Note</strong>: <%= session.getAttribute("note") %> 
-                    <strong>Copy Status</strong>: <%= session.getAttribute("copy-status") %><% if(session.getAttribute("copy-status").equals("Checked Out")) { %>, Due: <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } else if(session.getAttribute("copy-status").equals("On Hold")) { %> Next Hold: <%= session.getAttribute("hold-patron") %> <% } %></p>
+                    <strong>Copy Status</strong>: <%= session.getAttribute("copy-status") %><% if(session.getAttribute("copy-status").equals("Checked Out")) { %>, Due: <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } else if(session.getAttribute("copy-status").equals("On Hold")) { %> Next Hold: <%= session.getAttribute("hold-patron") %> <% } %></p>
                 <audio src="assets/sound/chime.mp3" style="display: none;" autoplay></audio>
          <% } else if(((String)session.getAttribute("copy-status")).startsWith("On Hold")) { %>
-                <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: On Hold. <% if(((String)session.getAttribute("copy-status")).endsWith("Checked Out")) { %> Currently due <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %> <% } %>&nbsp;Next patron: <strong><%= session.getAttribute("hold-patron") %></strong></p>
+                <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: On Hold. <% if(((String)session.getAttribute("copy-status")).endsWith("Checked Out")) { %> Currently due <%= ((Date) (session.getAttribute("due"))).toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } %>&nbsp;Next patron: <strong><%= session.getAttribute("hold-patron") %></strong></p>
                 <audio src="assets/sound/twinkle.mp3" style="display: none;" autoplay></audio>
 <%          } else if(session.getAttribute("copy-status").equals("Checked Out")) {
                 Date dueDate = (Date)session.getAttribute("due");
                 if(dueDate.before(Date.valueOf(LocalDate.now()))) { %>
-                    <p id="error"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Overdue,  due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></p>
+                    <p id="error"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Overdue,  due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %></p>
                     <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
 <%              } else { %>
-                    <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Checked Out, due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %></p>
+                    <p id="success"><img src="assets/img/note.png" alt="Flag"><strong>Copy Status</strong>: Checked Out, due <%= dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %></p>
                     <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%              }
             } else if(session.getAttribute("copy-status").equals("Lost")) { %>
@@ -76,7 +76,7 @@
     }
     else if(status == SC_PARTIAL_CONTENT) {
         if(operation.equals("checkin")) { %>
-            <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Success</strong>: Check in completed&nbsp;-&nbsp;<strong>Overdue</strong>&nbsp;(due <%= ((Date) session.getAttribute("due")).toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")) %>)</p>
+            <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Success</strong>: Check in completed&nbsp;-&nbsp;<strong>Overdue</strong>&nbsp;(due <%= ((Date) session.getAttribute("due")).toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %>)</p>
             <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
      <% }
     } %>

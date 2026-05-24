@@ -48,7 +48,7 @@ public class CheckOutServlet extends HttpServlet {
                             bookDao.checkOut(book, patron);
                             session.setAttribute("status", SC_ACCEPTED);
                             session.setAttribute("operation", "checkout");
-                            session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+                            session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
                             response.sendRedirect(referrer);
                         }
                         else {
@@ -60,7 +60,7 @@ public class CheckOutServlet extends HttpServlet {
                         bookDao.checkOut(book, patron);
                         session.setAttribute("status", SC_ACCEPTED);
                         session.setAttribute("operation", "checkout");
-                        session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("dd MMMM yyyy")));
+                        session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
                         response.sendRedirect(referrer);
                     }
 
