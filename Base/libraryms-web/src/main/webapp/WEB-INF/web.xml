@@ -67,4 +67,8 @@
         <servlet-name>ReleaseReadyHoldServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.ReleaseReadyHoldServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RenewServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.RenewServlet</servlet-class>
+    </servlet>
 </web-app>

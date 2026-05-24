@@ -22,7 +22,7 @@
         HoldDao holdDao = (HoldDao) session.getAttribute("HoldDao");
         TitleDao titleDao = (TitleDao) session.getAttribute("TitleDao");
         int status = session.getAttribute("status") == null ? SC_OK : (int)session.getAttribute("status");
-        if(status != SC_OK && status != SC_ACCEPTED) { %>
+        if(status != SC_OK && status != SC_ACCEPTED && status != SC_NO_CONTENT) { %>
             <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>:
                 <% switch(status) {
                     case SC_BAD_REQUEST: %>
@@ -44,11 +44,14 @@
     <%  } else if(status == SC_ACCEPTED) { %>
             <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Hold released</p>
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
-    <% }  else {
+    <% }  else if(status == SC_NO_CONTENT) { %>
+        <p id="success"><img src="assets/img/check.png" alt="Success"/><strong>Success</strong>: Item renewed.</p>
+        <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+    <% }   else {
             if(session.getAttribute("play-sound") != null) {%>
-                <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
-    <%      }
-        } %>
+<audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
+<%      }
+}%>
 
         <h3 style="display: inline-block;">Signed in as: <%= user.lastName %>, <%= user.firstName %></h3>
         <% if(user.libraryAdmin) {%>
@@ -88,6 +91,7 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>Due</th>
+                    <th>Renew</th>
                 </tr>
 
                 <% for(Book book : books) {
@@ -97,6 +101,12 @@
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %></td>
+                        <td>
+                            <form action="RenewServlet" method="post" style="margin: unset;">
+                                <input type="hidden" name="copy-barcode" id="copy-barcode" value="<%= book.copyBarcode %>"/>
+                                <button type="submit" name="renew-submit">Renew <img src="assets/img/proceed.png" alt=""/></button>
+                            </form>
+                        </td>
                     </tr>
                 <% } %>
             </table>
@@ -142,7 +152,6 @@
                     <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                     <td>
                         <form action="ReleaseReadyHoldServlet" method="post" style="margin: unset;">
-                            <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
                             <input type="hidden" name="copy-barcode" id="copy-barcode" value="<%= book.copyBarcode %>"/>
                             <button type="submit" name="release-submit">Release <img src="assets/img/proceed.png" alt=""/></button>
                         </form>
