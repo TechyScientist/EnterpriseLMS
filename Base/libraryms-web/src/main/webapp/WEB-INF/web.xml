@@ -55,4 +55,8 @@
         <servlet-name>AddCopyServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.AddCopyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveTitleServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.RemoveTitleServlet</servlet-class>
+    </servlet>
 </web-app>
