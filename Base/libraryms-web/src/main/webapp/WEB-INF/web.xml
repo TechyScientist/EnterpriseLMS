@@ -59,4 +59,8 @@
         <servlet-name>RemoveTitleServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.RemoveTitleServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RemoveCopyServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.RemoveCopyServlet</servlet-class>
+    </servlet>
 </web-app>

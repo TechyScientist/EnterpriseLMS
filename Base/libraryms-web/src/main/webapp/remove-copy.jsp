@@ -12,13 +12,13 @@
                     Invalid barcode. Please try again.
 <%                  break;
                 case SC_NOT_ACCEPTABLE: %>
-                    Unable to delete copy - is currently checked out.
+                    Copy is currently checked out.
 <%                  break;
                 case SC_BAD_REQUEST: %>
                     That action must be done with the delete copy form.
 <%                  break;
                 case SC_NOT_FOUND: %>
-                    Patron not found. Please try again.
+                    Copy not found. Please try again.
 <%                  break;
             } %>
             </p>
@@ -28,7 +28,7 @@
             <audio src="assets/sound/ding.mp3" style="display: none;" autoplay></audio>
 <%      } %>
 <h3>Delete a Copy Record</h3>
-  <form action="" method="post">
+  <form action="RemoveCopyServlet" method="post">
         <div class="form-field">
             <label for="barcode">Copy Barcode</label>
             <input type="text" name="barcode" id="barcode" required/>
