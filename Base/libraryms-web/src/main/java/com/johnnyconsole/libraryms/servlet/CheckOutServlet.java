@@ -45,11 +45,17 @@ public class CheckOutServlet extends HttpServlet {
                     }
                     else if(book.status.equals("On Hold")) {
                         if(user.libraryStaff || user.libraryAdmin) {
-                            bookDao.checkOut(book, patron);
-                            session.setAttribute("status", SC_ACCEPTED);
-                            session.setAttribute("operation", "checkout");
-                            session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
-                            response.sendRedirect(referrer);
+                            if(patron.equals(book.outTo)) {
+                                bookDao.checkOut(book, patron);
+                                session.setAttribute("status", SC_ACCEPTED);
+                                session.setAttribute("operation", "checkout");
+                                session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
+                                response.sendRedirect(referrer);
+                            } else {
+                                session.setAttribute("status", SC_REQUESTED_RANGE_NOT_SATISFIABLE);
+                                session.setAttribute("operation", "checkout");
+                                response.sendRedirect(referrer);
+                            }
                         }
                         else {
                             session.setAttribute("status", SC_NOT_ACCEPTABLE);
