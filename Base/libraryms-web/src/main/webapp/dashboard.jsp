@@ -65,7 +65,7 @@
                 ready = bookDao.onHoldFor(user.barcode);
             List<Fine> fines = fineDao.listForPatron(user.barcode);
             List<Hold> holds = holdDao.listByPatronBarcode(user.barcode);%>
-        <p style="margin: 0 10px 10px 10px;"><strong>Patron Barcode</strong>: <%= user.barcode %></p>
+        <p style="display: flex; align-items: center; margin: 0 10px 10px 10px;"><strong>Patron Barcode</strong>: <img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= user.barcode %>" alt="<%= user.barcode %>" style="width: 150px; aspect-ratio: 3/2; margin-left: 10px;"/></p>
         <p style="margin: 10px;"><strong>Account Balance</strong>: <%= String.format("$%.2f", fines.isEmpty() ? 0f : fines.stream().mapToDouble(Fine::getAmount).sum()) %></p>
         <% if(!fines.isEmpty()) { %>
             <table style="margin: 10px;">
@@ -97,7 +97,7 @@
                 <% for(Book book : books) {
                     Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                     <tr>
-                        <th><%= book.copyBarcode %></th>
+                        <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.copyBarcode %>" alt="<%= book.copyBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><% if(book.dueDate.before(Date.valueOf(LocalDate.now()))) { %><strong>Overdue</strong><br/><% } %><%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %></td>
@@ -122,7 +122,7 @@
 
                 <% for(Hold hold : holds) { %>
                     <tr>
-                        <td><strong><%= hold.titleBarcode %></strong> (<%= titleDao.findByBarcode(hold.titleBarcode).title %>)</td>
+                        <td><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= hold.titleBarcode %>" alt="<%= hold.titleBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/>(<%= titleDao.findByBarcode(hold.titleBarcode).title %>)</td>
                         <td><%= hold.placed.toLocalDateTime().format(DateTimeFormatter.ofPattern("d MMMM yyyy h:mm:ss a")) %></td>
                         <td>
                             <form action="ReleaseHoldServlet" method="post" style="margin: unset;">
@@ -147,7 +147,7 @@
             <%  for(Book book : ready) {
                     Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                 <tr>
-                    <th><%= book.copyBarcode %></th>
+                    <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.copyBarcode %>" alt="<%= book.copyBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
                     <td><%= titleInfo.title %></td>
                     <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                     <td>

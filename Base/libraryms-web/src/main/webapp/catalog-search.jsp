@@ -63,8 +63,8 @@
                     <th>Status</th>
                 </tr>
                 <tr>
-                    <th><%= book.copyBarcode %></th>
-                    <th><%= book.titleBarcode %></th>
+                    <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.copyBarcode %>" alt="<%= book.copyBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
+                    <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.titleBarcode %>" alt="<%= book.titleBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
                     <td><%= titleInfo.title %></td>
                     <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                     <td><%= book.status %><% if(book.status.equals("Checked Out") && (user.libraryStaff || user.libraryAdmin)) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } %></td>
@@ -86,8 +86,8 @@
                 <% for(Book book : booklist) {
                     Title titleInfo = titleDao.findByBarcode(book.titleBarcode); %>
                     <tr>
-                        <th><%= book.copyBarcode %></th>
-                        <th><%= book.titleBarcode %></th>
+                        <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.copyBarcode %>" alt="<%= book.copyBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
+                        <th><img src="https://barcode.orcascan.com?type=ean13&format=png&data=<%= book.titleBarcode %>" alt="<%= book.titleBarcode %>" style="width: 150px; aspect-ratio: 3/2;"/></th>
                         <td><%= titleInfo.title %></td>
                         <td><%= titleInfo.author.replace("\n", "<br/>") %></td>
                         <td><%= book.status %><% if(book.status.equals("Checked Out") && (user.libraryStaff || user.libraryAdmin)) { %>, Due <%= book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")) %> <% } %></td>
