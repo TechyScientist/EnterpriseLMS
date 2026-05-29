@@ -32,7 +32,12 @@
             case SC_BAD_REQUEST: %>
                 <p id="error"><img src="assets/img/cross.png" alt="Error"/><strong>Error</strong>: Invalid patron or copy barcode. Please try again.</p>
                 <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
-      <%    }
+      <%        break;
+            case SC_REQUESTED_RANGE_NOT_SATISFIABLE: %>
+                <p id="error"><img src="assets/img/cross.png" alt="Error"><strong>Error</strong>: Copy is on hold to a different patron.</p>
+                <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
+      <%        break;
+        }
     }
     else if(status == SC_ACCEPTED) {
         if(operation.equals("checkin")) { %>

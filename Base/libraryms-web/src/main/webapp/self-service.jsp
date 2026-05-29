@@ -20,6 +20,9 @@ else {
                 case SC_NOT_FOUND:%>
                     <%= operation.equals("hold") ? "Title" : "Copy" %> not found. Please double check the barcode and try again.
             <%      break;
+                case SC_REQUESTED_RANGE_NOT_SATISFIABLE: %>
+                    This title is on hold and cannot be checked out at this time.
+            <%      break;
             } %>
         </p>
         <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
