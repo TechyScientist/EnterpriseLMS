@@ -83,7 +83,7 @@
                 <% } %>
             </table>
         <% } %>
-        <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %></p>
+        <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %> of <%= user.checkoutLimit %> maximum</p>
         <% if(!books.isEmpty()) { %>
             <table style="margin: 10px;">
                 <tr>
@@ -104,6 +104,7 @@
                         <td>
                             <form action="RenewServlet" method="post" style="margin: unset;">
                                 <input type="hidden" name="copy-barcode" id="copy-barcode" value="<%= book.copyBarcode %>"/>
+                                <input type="hidden" name="patron-barcode" id="patron-barcode" value="<%= user.barcode %>"/>
                                 <button type="submit" name="renew-submit">Renew <img src="assets/img/proceed.png" alt=""/></button>
                             </form>
                         </td>
