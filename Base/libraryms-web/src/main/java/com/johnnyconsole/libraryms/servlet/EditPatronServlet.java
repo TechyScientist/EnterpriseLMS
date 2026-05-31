@@ -31,9 +31,10 @@ public class EditPatronServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         if(session.getAttribute("user") != null) {
+            String referrer = request.getHeader("referer");
             if(request.getParameter("edit-patron-submit") != null) {
                 User user = (User) session.getAttribute("user");
-                if(user.libraryStaff || user.libraryAdmin) {
+                if(user.libraryStaff || user.libraryAdmin || request.getParameter("barcode").equals(user.barcode)) {
                     String barcode = request.getParameter("barcode"),
                             lastName = request.getParameter("last-name"),
                             firstName = request.getParameter("first-name"),
@@ -58,7 +59,7 @@ public class EditPatronServlet extends HttpServlet {
                             else if(!username.equals(patron.username)) {
                                 session.setAttribute("patron", patron);
                                 session.setAttribute("status", SC_PRECONDITION_FAILED);
-                                response.sendRedirect("/library/edit-patron.jsp");
+                                response.sendRedirect(referrer);
                                 return;
                             }
                             
@@ -68,7 +69,7 @@ public class EditPatronServlet extends HttpServlet {
                             else {
                                 session.setAttribute("patron", patron);
                                 session.setAttribute("status", SC_REQUESTED_RANGE_NOT_SATISFIABLE);
-                                response.sendRedirect("/library/edit-patron.jsp");
+                                response.sendRedirect(referrer);
                                 return;
                             }
                             patron.loanTime = loanTime;
@@ -80,21 +81,21 @@ public class EditPatronServlet extends HttpServlet {
                                 } else {
                                     session.setAttribute("patron", patron);
                                     session.setAttribute("status", SC_CONFLICT);
-                                    response.sendRedirect("/library/edit-patron.jsp");
+                                    response.sendRedirect(referrer);
                                     return;
                                 }
                             }
                             userDao.update(patron);
                             if(patron.barcode.equals(user.barcode)) session.setAttribute("user", patron);
                             session.setAttribute("status", SC_ACCEPTED);
-                            response.sendRedirect("/library/edit-patron.jsp");
+                            response.sendRedirect(referrer);
                         } else {
                             session.setAttribute("status", SC_NOT_FOUND);
-                            response.sendRedirect("/library/edit-patron.jsp");
+                            response.sendRedirect(referrer);
                         }
                     } else {
                         session.setAttribute("status", SC_NOT_ACCEPTABLE);
-                        response.sendRedirect("/library/edit-patron.jsp");
+                        response.sendRedirect(referrer);
                     }
                 } else {
                     session.setAttribute("status", SC_FORBIDDEN);
@@ -102,7 +103,7 @@ public class EditPatronServlet extends HttpServlet {
                 }
             } else {
                 session.setAttribute("status", SC_BAD_REQUEST);
-                response.sendRedirect("/library/edit-patron.jsp");
+                response.sendRedirect(referrer);
             }
         } else {
             session.setAttribute("status", SC_UNAUTHORIZED);
