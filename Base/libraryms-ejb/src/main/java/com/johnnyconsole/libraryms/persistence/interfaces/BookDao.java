@@ -1,6 +1,7 @@
 package com.johnnyconsole.libraryms.persistence.interfaces;
 
 import com.johnnyconsole.libraryms.persistence.Book;
+import com.johnnyconsole.libraryms.persistence.User;
 
 import javax.ejb.Local;
 import javax.swing.*;
@@ -11,9 +12,9 @@ public interface BookDao {
     boolean create(Book book);
     boolean delete(Book book);
     boolean checkIn(Book book);
-    boolean checkOut(Book book, String patronBarcode);
+    boolean checkOut(Book book, User patron);
     boolean hold(Book book, String patronBarcode);
-    boolean renew(Book book);
+    boolean renew(Book book, int days);
     boolean markLost(Book book);
     Book findByCopyCode(String barcode);
     List<Book> findByTitleBarcode(String username);

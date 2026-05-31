@@ -1,6 +1,7 @@
 package com.johnnyconsole.libraryms.persistence.implementations;
 
 import com.johnnyconsole.libraryms.persistence.Book;
+import com.johnnyconsole.libraryms.persistence.User;
 import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
 
 import javax.ejb.Stateless;
@@ -52,11 +53,11 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public boolean checkOut(Book book, String patronBarcode) {
+    public boolean checkOut(Book book, User patron) {
         try {
             book.status = "Checked Out";
-            book.outTo = patronBarcode;
-            book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+            book.outTo = patron.barcode;
+            book.dueDate = Date.valueOf(LocalDate.now().plusDays(patron.loanTime));
             manager.merge(book);
             return true;
         } catch(Exception ex) {
@@ -77,9 +78,9 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public boolean renew(Book book) {
+    public boolean renew(Book book, int days) {
         try {
-            book.dueDate = Date.valueOf(LocalDate.now().plusDays(14));
+            book.dueDate = Date.valueOf(LocalDate.now().plusDays(days));
             manager.merge(book);
             return true;
         } catch(Exception ex) {
