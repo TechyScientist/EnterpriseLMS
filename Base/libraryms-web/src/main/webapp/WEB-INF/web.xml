@@ -71,4 +71,8 @@
         <servlet-name>RenewServlet</servlet-name>
         <servlet-class>com.johnnyconsole.libraryms.servlet.RenewServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GetPatronInformationServlet</servlet-name>
+        <servlet-class>com.johnnyconsole.libraryms.servlet.GetPatronInformationServlet</servlet-class>
+    </servlet>
 </web-app>
