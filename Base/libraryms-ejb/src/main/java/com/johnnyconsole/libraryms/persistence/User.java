@@ -36,6 +36,10 @@ public class User {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     //TODO: Remove this method -- used only for testing
     @Override
     public String toString() {
