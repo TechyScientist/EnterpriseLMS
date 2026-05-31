@@ -4,6 +4,7 @@ import com.johnnyconsole.libraryms.interfaces.BarcodeBean;
 import com.johnnyconsole.libraryms.persistence.Book;
 import com.johnnyconsole.libraryms.persistence.User;
 import com.johnnyconsole.libraryms.persistence.interfaces.BookDao;
+import com.johnnyconsole.libraryms.persistence.interfaces.UserDao;
 
 import javax.ejb.EJB;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +21,9 @@ import static javax.servlet.http.HttpServletResponse.*;
 public class CheckOutServlet extends HttpServlet {
 
     @EJB
+    private UserDao userDao;
+
+    @EJB
     private BookDao bookDao;
 
     @EJB
@@ -30,12 +34,14 @@ public class CheckOutServlet extends HttpServlet {
         if (session.getAttribute("user") != null) {
             User user = (User) session.getAttribute("user");
             if (request.getParameter("checkout-submit") != null) {
-                String patron = request.getParameter("patron-barcode"),
+                String patronBarcode = request.getParameter("patron-barcode"),
                         copy = request.getParameter("copy-barcode"),
                         referrer = request.getParameter("referrer");
-                if (barcodeBean.isValidCopyBarcode(copy) && barcodeBean.isValidPatronBarcode(patron)) {
+                if (barcodeBean.isValidCopyBarcode(copy) && barcodeBean.isValidPatronBarcode(patronBarcode)) {
                     Book book = bookDao.findByCopyCode(copy);
-                    if (book == null) {
+                    User patron = userDao.findByBarcode(patronBarcode);
+
+                    if (book == null || patron == null) {
                         session.setAttribute("status", SC_NOT_FOUND);
                         response.sendRedirect(referrer);
                     } else if (!book.status.equals("Available") && !book.status.equals("On Hold")) {
@@ -45,12 +51,16 @@ public class CheckOutServlet extends HttpServlet {
                     }
                     else if(book.status.equals("On Hold")) {
                         if(user.libraryStaff || user.libraryAdmin) {
-                            if(patron.equals(book.outTo)) {
-                                bookDao.checkOut(book, patron);
-                                session.setAttribute("status", SC_ACCEPTED);
-                                session.setAttribute("operation", "checkout");
-                                session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
-                                response.sendRedirect(referrer);
+                            if(patron.barcode.equals(book.outTo)) {
+                                if(bookDao.checkedOutBy(patron.barcode).size() < patron.checkoutLimit) {
+                                    bookDao.checkOut(book, patron);
+                                    session.setAttribute("status", SC_ACCEPTED);
+                                    session.setAttribute("operation", "checkout");
+                                    session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
+                                    response.sendRedirect(referrer);
+                                } else {
+                                    //TODO: Handle at checkout limit error
+                                }
                             } else {
                                 session.setAttribute("status", SC_REQUESTED_RANGE_NOT_SATISFIABLE);
                                 session.setAttribute("operation", "checkout");
@@ -63,11 +73,15 @@ public class CheckOutServlet extends HttpServlet {
                             response.sendRedirect(referrer);
                         }
                     } else {
-                        bookDao.checkOut(book, patron);
-                        session.setAttribute("status", SC_ACCEPTED);
-                        session.setAttribute("operation", "checkout");
-                        session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
-                        response.sendRedirect(referrer);
+                        if(bookDao.checkedOutBy(patron.barcode).size() < patron.checkoutLimit) {
+                            bookDao.checkOut(book, patron);
+                            session.setAttribute("status", SC_ACCEPTED);
+                            session.setAttribute("operation", "checkout");
+                            session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
+                            response.sendRedirect(referrer);
+                        } else {
+                            //TODO: Handle at checkout limit error
+                        }
                     }
 
                 } else {
