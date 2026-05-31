@@ -148,6 +148,13 @@
                 <a href="/library/remove-copy.jsp">Remove a <strong>Copy</strong> Record</a><br/>
             <% } %>
         </div>
+        <% if(user.libraryAdmin) { %>
+            <div>
+                <h3>Barcoding</h3>
+                <a href="/library/barcoding-mark.jsp">Mark for barcoding</a><br/>
+                <a href="/library/barcoding-sheet">Generate/Print barcoding sheet(s)</a><br/>
+            </div>
+        <% } %>
     </div>
 <%@ include file="assets/include/footer.jsp" %>
 <% session.removeAttribute("status");
