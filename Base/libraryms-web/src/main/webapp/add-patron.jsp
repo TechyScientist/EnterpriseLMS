@@ -73,7 +73,7 @@
           </div>
           <div class="form-field" id="limit-div" style="margin-bottom: 0; display: none;">
               <label for="checkout-limit">Checkout Limit</label>
-              <input type="number" name="checkout-limit" id="checkout-limit" value="5" required/>
+              <input type="number" name="checkout-limit" id="checkout-limit" min="1" step="1" value="5" required/>
           </div>
       </div>
       <div style="display: grid; grid-template-columns: min-content min-content; gap: 10px;">
@@ -86,7 +86,7 @@
           </div>
           <div class="form-field" id="loan-div" style="margin-bottom: 0; display: none;">
               <label for="loan-time">Loan Time</label>
-              <input type="number" name="loan-time" id="loan-time" value="14" required/>
+              <input type="number" name="loan-time" id="loan-time" min="1" step="1" value="14" required/>
           </div>
       </div>
       <div style="display: grid; grid-template-columns: min-content min-content; gap: 10px;">
