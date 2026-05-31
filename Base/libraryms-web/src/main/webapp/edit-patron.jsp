@@ -121,6 +121,7 @@
                         </select>
                     </div>
                 </div>
+                <input type="hidden" name="referrer" id="referrer" value="/library/edit-patron.jsp"/>
                 <button type="submit" id="edit-patron-submit" name="edit-patron-submit">Commit Changes<img src="assets/img/proceed.png" alt="Proceed"/></button>
             </form>
 
