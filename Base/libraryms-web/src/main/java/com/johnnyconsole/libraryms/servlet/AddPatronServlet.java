@@ -34,7 +34,7 @@ public class AddPatronServlet extends HttpServlet {
                             ? barcodeBean.generatePatronBarcode() : request.getParameter("barcode"),
                             lastName = request.getParameter("last-name"),
                             firstName = request.getParameter("first-name"),
-                            username = request.getParameter("username"),
+                            username = request.getParameter("username").toLowerCase(),
                             password = request.getParameter("password"),
                             confirmPassword = request.getParameter("confirm-password");
                     boolean staff = Integer.parseInt(request.getParameter("staff")) == 1,
