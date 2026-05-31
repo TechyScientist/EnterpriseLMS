@@ -83,7 +83,7 @@
                 <% } %>
             </table>
         <% } %>
-        <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <%= books.size() %> of <%= user.checkoutLimit %> maximum</p>
+        <p style="margin: 10px;"><strong>Checked Out Materials</strong>: <% if(books.size() == user.checkoutLimit) { %> <img src="assets/img/warning.png" style="height: 15px; aspect-ratio: auto; margin-left: 5px;" alt="Warning"/> <% } %><%= books.size() %> of <%= user.checkoutLimit %> maximum</p>
         <% if(!books.isEmpty()) { %>
             <table style="margin: 10px;">
                 <tr>
