@@ -15,6 +15,7 @@ public class User {
     public String barcode;
     public String username, lastName, firstName;
     public boolean libraryStaff, libraryAdmin;
+    public int checkoutLimit = 5, loanTime = 14;
     private String password;
 
     public User() {
