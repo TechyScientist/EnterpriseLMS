@@ -131,10 +131,16 @@
 
         limitSelector.addEventListener("change", (event) => {
             limitDiv.style.display = event.target.selectedIndex === 0 ? "none" : "block";
+            if(event.target.selectedIndex === 0) {
+                document.getElementById("checkout-limit").value = "5"
+            }
         });
 
         loanSelector.addEventListener("change", (event) => {
             loanDiv.style.display = event.target.selectedIndex === 0 ? "none" : "block";
+            if(event.target.selectedIndex === 0) {
+                document.getElementById("loan-time").value = "14"
+            }
         });
     });
 </script>
