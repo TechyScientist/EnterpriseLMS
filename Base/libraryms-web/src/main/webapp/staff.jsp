@@ -37,6 +37,10 @@
                 <p id="error"><img src="assets/img/cross.png" alt="Error"><strong>Error</strong>: Copy is on hold to a different patron.</p>
                 <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
       <%        break;
+            case SC_LENGTH_REQUIRED: %>
+                <p id="error"><img src="assets/img/cross.png" alt="Error"><strong>Error</strong>: Patron has reached their checkout limit.</p>
+                <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>
+      <%        break;
         }
     }
     else if(status == SC_ACCEPTED) {

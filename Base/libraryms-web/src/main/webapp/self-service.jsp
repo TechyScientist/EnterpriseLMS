@@ -23,6 +23,9 @@ else {
                 case SC_REQUESTED_RANGE_NOT_SATISFIABLE: %>
                     This title is on hold and cannot be checked out at this time.
             <%      break;
+                case SC_LENGTH_REQUIRED: %>
+                    You have reached your checkout limit. Please see a library staff member to request an increase.
+            <%      break;
             } %>
         </p>
         <audio src="assets/sound/bonk.mp3" style="display: none;" autoplay></audio>

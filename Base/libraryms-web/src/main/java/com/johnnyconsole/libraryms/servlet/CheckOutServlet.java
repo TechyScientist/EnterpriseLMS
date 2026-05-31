@@ -59,7 +59,9 @@ public class CheckOutServlet extends HttpServlet {
                                     session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
                                     response.sendRedirect(referrer);
                                 } else {
-                                    //TODO: Handle at checkout limit error
+                                    session.setAttribute("status", SC_LENGTH_REQUIRED);
+                                    session.setAttribute("operation", "checkout");
+                                    response.sendRedirect(referrer);
                                 }
                             } else {
                                 session.setAttribute("status", SC_REQUESTED_RANGE_NOT_SATISFIABLE);
@@ -80,7 +82,9 @@ public class CheckOutServlet extends HttpServlet {
                             session.setAttribute("due-date", book.dueDate.toLocalDate().format(DateTimeFormatter.ofPattern("d MMMM yyyy")));
                             response.sendRedirect(referrer);
                         } else {
-                            //TODO: Handle at checkout limit error
+                            session.setAttribute("status", SC_LENGTH_REQUIRED);
+                            session.setAttribute("operation", "checkout");
+                            response.sendRedirect(referrer);
                         }
                     }
 
