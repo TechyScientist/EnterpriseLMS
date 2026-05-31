@@ -35,7 +35,7 @@ public class GetPatronInformationServlet extends HttpServlet {
                         User patron = userDao.findByBarcode(barcode);
                         if (patron != null) {
                                 session.setAttribute("patron", patron);
-                                session.setAttribute("status", SC_OK);
+                                session.setAttribute("status", SC_FOUND);
                                 response.sendRedirect("/library/edit-patron.jsp");
                             } else {
                                 session.setAttribute("status", SC_NOT_FOUND);
