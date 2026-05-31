@@ -57,7 +57,7 @@ public class UserDaoImpl implements UserDao {
     public User findByUsername(String username) {
         try {
             return (User) manager.createNamedQuery("User.FindByUsername")
-                    .setParameter("username", username)
+                    .setParameter("username", username.toLowerCase())
                     .getSingleResult();
         } catch(Exception ex) {
             return null;
